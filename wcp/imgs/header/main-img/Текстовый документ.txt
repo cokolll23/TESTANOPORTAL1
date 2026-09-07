@@ -1,0 +1,10 @@
+font-family: ONY_ MOSCOW brand;
+font-weight: 400;
+font-style: Wide;
+font-size: 207.84px;
+leading-trim: NONE;
+line-height: 66%;
+letter-spacing: 0%;
+text-align: center;
+text-transform: uppercase;
+background: #E30613;

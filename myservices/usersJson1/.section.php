@@ -1,0 +1,6 @@
+<?
+$sSectionName = "benefity";
+$arDirProperties = Array(
+
+);
+?>
