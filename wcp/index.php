@@ -1256,8 +1256,13 @@ Asset::getInstance()->addCss($_SERVER["DOCUMENT_ROOT"] . '/wcp/style.css');
 
         .wcp-9 .projects1 .star_OWLCAROUSEL_item {
             font-size: 18px;
+
         }
 
+        .wcp-9 .projects1 .star_OWLCAROUSEL_item a {
+            color: #000 !important;
+            text-decoration: none !important;
+        }
     </style>
 <?php // media reqsts?>
     <style>
@@ -1847,7 +1852,6 @@ $curUser = $USER->GetID();
                     </div>
                 </div>
             </section>
-
             <div id="leaders">
                 <div class="wcp-6">
                     <div class="container1">
@@ -1958,9 +1962,9 @@ $curUser = $USER->GetID();
 
                             <div class="section-info">
                                 <p class="section-info1">
-                                    АНО Проектный офис<br/>
+                                    АНО «Проектный офис<br/>
                                     по развитию туризма<br/>
-                                    и гостеприимства Москвы
+                                    и гостеприимства Москвы»
                                 </p>
                             </div>
                         </div>
@@ -2058,10 +2062,8 @@ $curUser = $USER->GetID();
                     <h1 class="title title-blue">Наша миссия</h1>
 
                     <div class="mission-card">
-                        <div style="flex-wrap: wrap;padding-left: 7%" class="mission-card_inner-wrapp flex">
-
-
-                            Заключается в формировании и продвижении положительного имиджа Москвы<br>
+                        <div style="flex-wrap: wrap;padding-left: 1%" class="mission-card_inner-wrapp flex">
+                            Заключается в формировании и продвижении положительного имиджа Москвы
                             как одного из ведущих туристических направлений в мире.
 
                             <svg style="margin-left: 32%;" width="433" height="30" viewBox="0 0 1333 62" fill="none"
@@ -2070,8 +2072,8 @@ $curUser = $USER->GetID();
                                       fill="#E30613"/>
                             </svg>
 
-                            Мы стремимся повышать узнаваемость Москвы, привлекать как российских,<br>
-                            так и иностранных туристов, раскрывая туристический потенциал столицы <br>
+                            Мы стремимся повышать узнаваемость Москвы, привлекать как российских,
+                            так и иностранных гостей, раскрывая туристический потенциал столицы <br>
                             и её богатое культурное наследие.
 
                         </div>
@@ -2095,8 +2097,8 @@ $curUser = $USER->GetID();
                             <div class="value-text">
                                 <h3>Стремление к развитию<br>и новым знаниям</h3>
                                 <p>
-                                    У нас регулярно проходят тренинги, обучения, организованы бесплатные
-                                    курсы английского языка для сотрудников.
+                                    У нас регулярно проходят тренинги и обучения, организованы бесплатные
+                                    курсы английского языка <br> для сотрудников.
                                 </p>
                             </div>
                         </div>
@@ -2107,7 +2109,7 @@ $curUser = $USER->GetID();
                                 <h3>Открытость<br>и прозрачность</h3>
                                 <p>
                                     Мы стремимся к открытому и честному общению на всех уровнях нашей
-                                    организации. Обращаемся на вы к руководителям, на ты к сотрудникам.
+                                    организации. Обращаемся на "вы"<br> к руководителям, на "ты" — <br>к сотрудникам.
                                 </p>
                             </div>
                         </div>
@@ -2123,9 +2125,7 @@ $curUser = $USER->GetID();
                             </div>
                         </div>
                     </div>
-
                     <div id="projects">
-
                         <div class="projects-head" style="margin-bottom:50px ">
                             <h2 class="title title-red">
                                 Проекты, которыми<br>
@@ -2167,15 +2167,11 @@ $curUser = $USER->GetID();
                         </div>
                     </div>
 
-
                 </div>
             </section>
         </div>
 
-
     </div>
-
-
 
     <div id="adresses" class="wcp-y container">
         <div class="container1">
@@ -2375,6 +2371,7 @@ $curUser = $USER->GetID();
             </main>
         </div>
     </div>
+
     <main style="padding-bottom: 50px;" class="page wcp-12">
         <section class="benefits">
             <div class="container1">
@@ -2604,13 +2601,7 @@ $curUser = $USER->GetID();
                 <h1 class="title title-blue">Полезные ссылки</h1>
                 <div class="cards">
                     <a target="_blank" href="http://helpdesk.welcome.moscow/" class="card">Сервисдеск</a>
-                    <a target="_blank" href="https://corp-portal.welcome.moscow/docs/shared/" class="card">Шаблоны
-                        АНО</a>
-
-                    <a href="https://corp-portal.welcome.moscow/hr/" class="card">Организационная структура</a>
-                    <a href="#" class="card">Корпоративный мессенджер</a>
-
-                    <a href="https://corp-portal.welcome.moscow/online/?IM_DIALOG=chat21130"
+                    <a href="https://t.me/+ipYVeSKg5uxiZTVi"
                        class="card card-handwritten rel">
                         <span style="font-family: " denistina", "Marck Script", cursive" class="hand
                         hand-left">интерактивы</span>
@@ -2621,10 +2612,21 @@ $curUser = $USER->GetID();
                                       fill="#E30613"/>
                             </svg>
                         </div>
-                        Канал на портале
+                        Канал в Telegram
                     </a>
 
-                    <a href="https://max.ru/join/M479Fi38oAW_hI5hkZyrLH6DFlXpCnLnHq30LzQlJSE"
+
+                    <a target="_blank" href="https://corp-portal.welcome.moscow/docs/shared/" class="card">Шаблоны
+                        АНО</a>
+                    <a href="https://corp-portal.welcome.moscow/online/?IM_DIALOG=chat21130" class="card">Канал на
+                        портале</a>
+
+
+                    <!--<a href="#" class="card">Корпоративный мессенджер</a>-->
+
+                    <a href="https://welcome.moscow/" class="card">Наш сайт</a>
+
+                    <a target="_blank" href="https://max.ru/join/M479Fi38oAW_hI5hkZyrLH6DFlXpCnLnHq30LzQlJSE"
                        class="card card-handwritten rel">
                         Канал в MAX
                         <div style="left: 59%" class="abs">
@@ -2637,7 +2639,7 @@ $curUser = $USER->GetID();
                         <span class="hand hand-right">анонсы</span>
                     </a>
 
-                    <a href="/" class="card">Наш сайт</a>
+
                     <!-- <a target="_blank" href="https://corp-portal.welcome.moscow/online/?IM_DIALOG=chat21130"
                         class="card">Канал на портале</a>-->
                 </div>

@@ -1,0 +1,53 @@
+.calendar-event-line-text{
+    white-space: normal;
+}
+ul.menu-items li#bx_left_menu_menu_office{display: none}
+/*#bx_left_menu_menu_structure,#top_menu_id_company_menu_company{
+    display: none;
+}*/
+.lab-form [name='web_form_submit']{
+    cursor: pointer;
+}
+.lab-form {
+    width: 50%;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 30px 40px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    transition: transform 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 20px;
+}
+.lab-form .demo-input, .lab-form input:not([type="reset"]), .lab-form input:not([type="submit"]), .lab-form textarea, .lab-form select {
+    width: 100%;
+    padding: 12px 5px;
+    border: 1px solid #cbd5e1;
+    border-radius: 16px;
+    font-size: 1rem;
+    margin: 12px 0 8px 0;
+    transition: border 0.2s;
+}
+
+.hidden{display: none}
+
+
+/*.idea-managment-content-right .status-box-l .status-box-r .status-box-m div:nth-of-type(1){
+    left: 375px;
+    position: absolute;
+}
+
+.idea-managment-content-right .status-box-l .status-box-r .status-box-m div:nth-of-type(2){
+    left: 275px;
+    position: absolute;
+}
+.IDEA-MANAGMENT-CONTENT-RIGHT .STATUS-BOX-L .STATUS-BOX-R .STATUS-BOX-M DIV:NTH-OF-TYPE(3){
+    left: 65px;
+    position: absolute;
+}*/
+.idea-managment-content-right .status-box-l .status-box-r .status-box-m div:nth-of-type(4){
+    left: 375px;
+    position: absolute;
+}
+div[data-id='166'],div[data-id='159']{display: none}
+#bx_left_menu_menu_company_about{display: none}

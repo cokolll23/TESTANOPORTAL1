@@ -1,0 +1,7 @@
+width: 352.91900634765625;
+height: 94.97037506103516;
+top: 98.28px;
+left: 85.34px;
+angle: 0 deg;
+opacity: 1;
+background: #E30613;
