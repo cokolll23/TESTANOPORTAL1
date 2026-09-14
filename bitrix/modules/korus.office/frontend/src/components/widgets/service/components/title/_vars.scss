@@ -1,0 +1,9 @@
+:root {
+  --kt-service-title-font-size: var(--c-service-title-font-size, 16px);
+  --kt-service-title-font-weight: var(--c-service-title-font-weight, 600);
+
+  --kt-service-title-link-size: var(--c-service-title-link-size, 24px);
+  --kt-service-title-link-color: var(--c-service-title-link-color, var(--kt-ui-icon-primary));
+  --kt-service-title-link-color-hover: var(--c-service-title-link-color-hover, var(--kt-ui-interactive-hover));
+  --kt-service-title-link-color-active: var(--c-service-title-link-color-active, var(--kt-ui-interactive-active));
+}

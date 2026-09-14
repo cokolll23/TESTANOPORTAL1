@@ -1,0 +1,11 @@
+.kt-inner-loading {
+  /* Defaults */
+  --kt-loading-color: var(--kt-ui-gray-60, #6f6f6f);
+  --kt-loading-bg: var(--kt-ui-layer-01-transparent, rgba(255, 255, 255, 0.8));
+  --kt-loading-spinner-color: var(--kt-ui-purple-60, #7949f4);
+  /* ======== */
+
+  --_kt-loading-color: var(--c-loading-color, var(--kt-loading-color));
+  --_kt-loading-bg: var(--c-loading-bg, var(--kt-loading-bg));
+  --_kt-loading-spinner-color: var(--c-loading-spinner-color, var(--kt-loading-spinner-color));
+}

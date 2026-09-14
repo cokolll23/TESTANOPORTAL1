@@ -1,0 +1,115 @@
+@use 'vars';
+@use 'design';
+
+.kt-btn {
+  min-width: var(--kt-btn-min-width);
+  min-height: var(--kt-btn-height);
+  padding: var(--kt-btn-padding);
+  font-family: var(--kt-btn-font-family);
+  font-size: var(--kt-btn-font-size);
+  line-height: var(--kt-btn-line-height);
+  letter-spacing: var(--kt-btn-letter-spacing);
+  font-weight: var(--kt-btn-font-weight);
+  border-radius: var(--kt-btn-border-radius);
+  color: var(--kt-btn-color);
+  background-color: var(--kt-btn-bg-color);
+
+  &::before {
+    border-color: var(--kt-btn-border-color);
+  }
+
+  &:hover {
+    color: var(--kt-btn-color-hover);
+    background-color: var(--kt-btn-bg-color-hover);
+  }
+
+  &:hover::before {
+    border-color: var(--kt-btn-border-color-hover);
+  }
+
+  &:focus-visible {
+    box-shadow: var(--kt-btn-box-shadow-focus);
+  }
+
+  &:active {
+    color: var(--kt-btn-color-active);
+    background-color: var(--kt-btn-bg-color-active);
+  }
+
+  &:active::before {
+    border-color: var(--kt-btn-border-color-active);
+  }
+
+  &:disabled {
+    color: var(--kt-btn-color-disabled);
+    background-color: var(--kt-btn-bg-color-disabled);
+  }
+
+  &:disabled::before {
+    border-color: var(--kt-btn-border-color-disabled);
+  }
+
+  &.q-btn--dense {
+    --kt-btn-padding: var(--kt-ui-btn-padding-sm);
+    --kt-btn-font-size: var(--kt-btn-font-size-sm);
+
+    min-width: var(--kt-ui-btn-min-width-sm);
+    min-height: var(--kt-ui-btn-size-sm);
+    height: var(--kt-ui-btn-size-sm);
+  }
+
+  &.q-btn--round {
+    --kt-btn-padding: 0;
+
+    min-width: var(--kt-btn-height-md);
+    min-height: var(--kt-btn-height-md);
+    height: var(--kt-btn-height-md);
+  }
+
+  &.q-btn--round.q-btn--dense {
+    --kt-btn-padding: 0;
+
+    min-width: var(--kt-btn-height-sm);
+    min-height: var(--kt-btn-height-sm);
+    height: var(--kt-btn-height-sm);
+  }
+
+  &.q-btn--rounded {
+    border-radius: var(--kt-btn-border-radius);
+  }
+
+  & + & {
+    margin-left: var(--kt-btn-margin-left);
+  }
+
+  &:not(.q-btn--outline) {
+    transition: background-color 160ms linear,
+                border-color 160ms linear;
+  }
+
+  &.q-btn--outline {
+    transition: color 160ms linear,
+                border-color 160ms linear;
+  }
+
+  .q-focus-helper {
+    display: none;
+  }
+
+  .q-btn__content {
+    gap: 8px;
+  }
+
+  .on-right {
+    margin-left: 8px;
+  }
+
+  .on-left {
+    margin-right: 8px;
+  }
+
+  .q-icon,
+  .q-spinner {
+    font-size: 20px;
+  }
+}

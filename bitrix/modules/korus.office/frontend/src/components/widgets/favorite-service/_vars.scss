@@ -1,0 +1,11 @@
+:root {
+  --kt-favorite-service-offset: var(--c-favorite-service-offset, var(--kt-ui-offset-xl));
+  --kt-favorite-service-padding: var(--c-favorite-service-padding, var(--kt-ui-offset-lg));
+  --kt-favorite-service-border-radius: var(--c-favorite-service-border-radius, var(--kt-ui-border-radius-lg));
+  --kt-favorite-service-bg: var(--c-favorite-service-bg, var(--kt-ui-layer-01));
+
+  --kt-favorite-service-title-font-size: var(--c-favorite-service-title-font-size, 16px);
+  --kt-favorite-service-title-font-weight: var(--c-favorite-service-title-font-weight, 600);
+
+  --kt-favorite-service-icon-size: var(--c-favorite-service-icon-size, 70px);
+}

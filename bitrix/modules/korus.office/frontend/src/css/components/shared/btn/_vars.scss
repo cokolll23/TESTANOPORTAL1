@@ -1,0 +1,26 @@
+.kt-btn {
+  --kt-btn-min-width: var(--ui-btn-min-width);
+  --kt-btn-min-width-md: var(--kt-ui-btn-min-width-md);
+  --kt-btn-min-width-sm: var(--kt-ui-btn-min-width-sm);
+
+  --kt-btn-height: var(--ui-btn-height);
+  --kt-btn-height-md: var(--kt-ui-btn-size-md);
+  --kt-btn-height-sm: var(--kt-ui-btn-size-sm);
+
+  --kt-btn-margin-left: 10px;
+  --kt-btn-padding: var(--ui-btn-padding);
+  --kt-btn-padding-md: var(--kt-ui-btn-padding-md);
+  --kt-btn-padding-sm: var(--kt-ui-btn-padding-sm);
+
+  --kt-btn-font-size: var(--ui-btn-font-size);
+  --kt-btn-font-size-md: var(--kt-ui-btn-font-size-md);
+  --kt-btn-font-size-sm: var(--kt-ui-btn-font-size-sm);
+
+  --kt-btn-border-radius: var(--ui-btn-radius);
+  --kt-btn-box-shadow-focus: 0 0 0 2px var(--kt-ui-focus);
+
+  --kt-btn-font-family: var(--kt-ui-btn-font-family);
+  --kt-btn-line-height: 1.43;
+  --kt-btn-font-weight: var(--kt-ui-btn-font-weight);
+  --kt-btn-letter-spacing: 0.16px;
+}

@@ -1,0 +1,11 @@
+:root {
+  --kt-badge-outline-color: var(--c-badge-outline-color, var(--kt-ui-text-secondary));
+  --kt-badge-outline-border-color: var(--c-badge-outline-border-color, var(--kt-ui-border-subtle-01));
+  --kt-badge-outline-bg: var(--c-badge-outline-bg, var(--kt-ui-white));
+}
+
+.kt-badge.q-badge--outline {
+  --kt-badge-color: var(--kt-badge-outline-color);
+  --kt-badge-border-color: var(--kt-badge-outline-border-color);
+  --kt-badge-bg: var(--c-badge-bg, var(--kt-badge-outline-bg));
+}

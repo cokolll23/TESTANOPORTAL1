@@ -1,0 +1,6 @@
+:root {
+  --kt-lk-widget-stub-gap: var(--c-lk-widget-stub-gap, var(--kt-ui-offset-lg, var(--ui-space-inline-md)));
+
+  --kt-lk-widget-stub-image-size: var(--c-lk-widget-stub-image-size, 64px);
+  --kt-lk-widget-stub-image-bg: var(--c-lk-widget-stub-image-bg, var(--ui-color-primary));
+}

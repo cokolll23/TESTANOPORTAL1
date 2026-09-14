@@ -1,0 +1,9 @@
+.kt-tag--purple-theme.kt-tag--inline {
+  --kt-tag-bg: var(--kt-ui-tag-purple-50);
+  --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-purple-20-hover);
+
+  &.q-chip--selected {
+    --kt-tag-bg: var(--kt-ui-tag-purple-50);
+    --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-purple-50-hover);
+  }
+}

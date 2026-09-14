@@ -1,0 +1,9 @@
+:root {
+  --kt-gratitude-size: var(--c-gratitude-size, 40px);
+
+  --kt-gratitude-border-color: var(--c-gratitude-border-color, var(--kt-ui-border-subtle-01));
+  --kt-gratitude-border-color-hover: var(--c-gratitude-border-color-hover, var(--kt-ui-white));
+
+  --kt-gratitude-bg: var(--c-gratitude-bg, var(--kt-ui-layer-01));
+  --kt-gratitude-bg-hover: var(--c-gratitude-bg-hover, var(--kt-ui-white));
+}

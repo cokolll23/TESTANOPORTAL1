@@ -1,0 +1,6 @@
+export { KtPersonalInfoText } from './text'
+export { KtPersonalInfoLink } from './link'
+export { KtPersonalInfoPhone } from './phone'
+export { KtPersonalInfoMessengers } from './messengers'
+export { KtPersonalInfoWorkplace } from './workplace'
+export { KtPersonalInfoUser } from './user'

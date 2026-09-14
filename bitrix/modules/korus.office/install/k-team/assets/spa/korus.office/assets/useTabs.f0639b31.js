@@ -1,0 +1,1 @@
+import{dS as s,r as c,w as o}from"./index.a1748043.js";function n(){const u=s(),e=[{name:"active",label:"\u0410\u043A\u0442\u0438\u0432\u043D\u044B\u0435"},{name:"closed",label:"\u0417\u0430\u043A\u0440\u044B\u0442\u044B"}],t=c("active");return o(t,async a=>{u.resetNavInit(a),await u.load({status:a}),u.changeTab(a)}),{tabs:e,activeTab:t}}export{n as u};

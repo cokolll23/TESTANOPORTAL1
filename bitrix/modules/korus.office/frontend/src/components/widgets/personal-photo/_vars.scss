@@ -1,0 +1,11 @@
+:root {
+  --kt-personal-photo-avatar-size-mobile: var(--c-personal-photo-avatar-size-mobile, 166px);
+  --kt-personal-photo-avatar-size-desktop: var(--c-personal-photo-avatar-size-desktop, 208px);
+
+  --kt-personal-photo-palm-icon-size: var(--c-personal-photo-palm-icon-size, 40px);
+  --kt-personal-photo-palm-icon-color: var(--c-personal-photo-palm-icon-color, var(--kt-ui-white));
+  --kt-personal-photo-palm-icon-bg: var(--c-personal-photo-palm-icon-bg, var(--kt-ui-color-primary));
+
+  --kt-personal-photo-vacation-color: var(--c-personal-photo-vacation-color, var(--kt-ui-color-secondary));
+  --kt-personal-photo-vacation-period-color: var(--c-personal-photo-vacation-period-color, var(--kt-ui-text-primary));
+}

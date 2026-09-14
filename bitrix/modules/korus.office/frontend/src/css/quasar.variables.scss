@@ -1,0 +1,90 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+$breakpoint-xs     : 767px;
+$breakpoint-sm     : 1023px;
+$breakpoint-md     : 1279px;
+$breakpoint-lg     : 1439px;
+$breakpoint-xl     : 1799px;
+
+// sorry for long line; we need .sass and it doesn't support multi-line list
+$sizes: (
+  'xs': 0,
+  'sm': ($breakpoint-xs + 1),
+  'md': ($breakpoint-sm + 1),
+  'lg': ($breakpoint-md + 1),
+  'xl': ($breakpoint-lg + 1),
+  'xxl': ($breakpoint-xl + 1)
+);
+
+$breakpoint-xs-max: (map-get($sizes, 'sm') - 0.02);
+
+$breakpoint-sm-min: map-get($sizes, 'sm');
+$breakpoint-sm-max: (map-get($sizes, 'md') - 0.02);
+
+$breakpoint-md-min: map-get($sizes, 'md');
+$breakpoint-md-max: (map-get($sizes, 'lg') - 0.02);
+
+$breakpoint-lg-min: map-get($sizes, 'lg');
+$breakpoint-lg-max: (map-get($sizes, 'xl') - 0.02);
+
+$breakpoint-xl-min: map-get($sizes, 'xl');
+$breakpoint-xl-max: map-get($sizes, 'xxl');
+
+$breakpoint-xxl-min: map-get($sizes, 'xxl');
+
+$primary           : var(--ui-color-primary);
+$secondary         : var(--ui-color-secondary);
+$accent            : #9C27B0;
+
+$dark              : #181818;
+
+$positive          : #7E9F26;
+$negative          : #C10015;
+$info              : #3385FF;
+$warning           : #FFA726;
+
+$app-white         : #FFFFFF;
+
+$app-grey-1        : #181818;
+$app-grey-2        : #333333;
+$app-grey-3        : #505050;
+$app-grey-4        : #525C69;
+$app-grey-5        : #818B9A;
+$app-grey-6        : #868D96;
+$app-grey-7        : #8C8C8C;
+$app-grey-8        : #A5ADB3;
+$app-grey-9        : #C1C4C9;
+$app-grey-10       : #C4C4C4;
+$app-grey-11       : #C6CDD3;
+$app-grey-12       : #D9D9D9;
+$app-grey-13       : #E3E3E3;
+$app-grey-14       : #E7E7E7;
+$app-grey-15       : #E9E9E9;
+$app-grey-16       : #EEF2F4;
+$app-grey-17       : #F3F4F8;
+$app-grey-18       : #F5F7F9;
+
+$app-orange-1      : #FFA726;
+$app-orange-2      : #FEAB29;
+$app-orange-3      : #FCB64D;
+
+$app-deep-orange-1 : #EA5F23;
+
+$app-green-1       : #7E9F26;
+$app-green-2       : #ADC855;
+$app-green-3       : #ABCB57;
+
+$app-blue-1        : #3385FF;
+$app-blue-2        : #3D86F3;

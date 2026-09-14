@@ -1,0 +1,9 @@
+.kt-tag--magenta-theme.kt-tag--inline {
+  --kt-tag-bg: var(--kt-ui-tag-magenta-50);
+  --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-magenta-20-hover);
+
+  &.q-chip--selected {
+    --kt-tag-bg: var(--kt-ui-tag-magenta-50);
+    --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-magenta-50-hover);
+  }
+}

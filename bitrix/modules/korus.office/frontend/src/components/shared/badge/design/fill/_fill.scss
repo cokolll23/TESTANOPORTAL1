@@ -1,0 +1,9 @@
+:root {
+  --kt-badge-fill-color: var(--c-badge-fill-color, var(--kt-ui-white));
+  --kt-badge-fill-bg: var(--c-badge-fill-bg, var(--kt-ui-color-danger));
+}
+
+.kt-badge {
+  --kt-badge-color: var(--kt-badge-fill-color);
+  --kt-badge-bg: var(--kt-badge-fill-bg);
+}

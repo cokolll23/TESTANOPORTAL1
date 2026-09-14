@@ -1,0 +1,11 @@
+.kt-comment-counter {
+  /* Defaults */
+  --kt-comment-counter-size: 20px;
+  --kt-comment-counter-color: var(--kt-ui-gray-100, #161616);
+  --kt-comment-counter-color-active: var(--kt-ui-purple-60, #7949f4);
+  /* ======== */
+
+  --_kt-comment-counter-size: var(--c-comment-counter-size, var(--kt-comment-counter-size));
+  --_kt-comment-counter-color: var(--c-comment-counter-color, var(--kt-comment-counter-color));
+  --_kt-comment-counter-color-active: var(--c-comment-counter-color-active, var(--kt-comment-counter-color-active));
+}

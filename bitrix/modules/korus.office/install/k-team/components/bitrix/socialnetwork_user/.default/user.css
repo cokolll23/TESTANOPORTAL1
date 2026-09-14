@@ -1,0 +1,6 @@
+.ui-toolbar-after-title:has(> .ui-toolbar-after-title-tg-button) {
+    flex-grow: 1;
+    display: flex;
+    justify-content: right;
+}
+

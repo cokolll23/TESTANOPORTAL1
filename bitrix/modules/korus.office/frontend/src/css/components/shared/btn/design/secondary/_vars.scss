@@ -1,0 +1,16 @@
+.kt-btn--secondary-theme {
+  --kt-btn-color: var(--kt-ui-text-primary);
+  --kt-btn-color-hover: var(--kt-ui-text-accented);
+  --kt-btn-color-active: var(--kt-ui-text-accented);
+  --kt-btn-color-disabled: var(--kt-ui-text-disabled);
+
+  --kt-btn-border-color: var(--kt-ui-button-secondary);
+  --kt-btn-border-color-hover: var(--kt-ui-button-secondary-hover);
+  --kt-btn-border-color-active: var(--kt-ui-button-secondary-active);
+  --kt-btn-border-color-disabled: var(--kt-ui-button-secondary-disabled);
+
+  --kt-btn-bg-color: var(--kt-ui-button-secondary);
+  --kt-btn-bg-color-hover: var(--kt-ui-button-secondary-hover);
+  --kt-btn-bg-color-active: var(--kt-ui-button-secondary-active);
+  --kt-btn-bg-color-disabled: var(--kt-ui-button-secondary-disabled);
+}

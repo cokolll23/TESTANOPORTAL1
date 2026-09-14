@@ -1,0 +1,21 @@
+{
+  "name": "korus/korus.office",
+  "type": "korus-module",
+  "description": "Office module of K-Team",
+  "authors": [
+    {
+      "name": "Viktor Malyugin",
+      "email": "vmaliugin@korusconsulting.ru"
+    }
+  ],
+  "version": "1.9.1",
+  "time": "10.01.2025",
+  "minimum-stability": "dev",
+  "require": {
+    "korus/installer": "^1.2",
+    "korus/korus.main": "^3.0",
+    "korus/korus.vult": "^1.1",
+    "korus/korus.personalarea": "^2.3.1",
+    "korus/korus.employees": "^1.1"
+  }
+}

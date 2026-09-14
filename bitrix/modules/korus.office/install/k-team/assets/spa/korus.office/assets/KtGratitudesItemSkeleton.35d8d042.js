@@ -1,0 +1,1 @@
+import{Q as e}from"./QSkeleton.d8507126.js";import{_ as r}from"./plugin-vue_export-helper.21dcd24c.js";import{x as t,y as o}from"./index.a1748043.js";const c={};function a(s,n){return t(),o(e,{type:"circle",size:"36px"})}var m=r(c,[["render",a]]);export{m as default};

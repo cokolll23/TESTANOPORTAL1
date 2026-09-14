@@ -1,0 +1,10 @@
+.kt-tag--teal-theme {
+  --kt-tag-bg: var(--kt-ui-tag-teal-20);
+  --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-teal-20-hover);
+
+  &.q-chip--selected {
+    --kt-tag-color: var(--kt-ui-white);
+    --kt-tag-bg: var(--kt-ui-tag-teal-50);
+    --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-teal-50-hover);
+  }
+}

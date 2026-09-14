@@ -1,0 +1,12 @@
+:root {
+  --kt-widget-wrapper-padding-mobile: var(--c-widget-wrapper-padding-mobile, var(--kt-ui-offset-lg));
+  --kt-widget-wrapper-padding-desktop: var(--c-widget-wrapper-padding-desktop, var(--kt-ui-offset-xl));
+
+  --kt-widget-wrapper-border-radius: var(--c-widget-wrapper-border-radius, var(--kt-ui-border-radius-lg));
+
+  --kt-widget-wrapper-bg: var(--c-widget-wrapper-bg, var(--kt-ui-layer-01));
+
+  --kt-widget-wrapper-header-offset: var(--c-widget-wrapper-header-offset, var(--kt-ui-offset-xl));
+
+  --kt-widget-wrapper-footer-offset: var(--c-widget-wrapper-footer-offset, var(--kt-ui-offset-xl));
+}

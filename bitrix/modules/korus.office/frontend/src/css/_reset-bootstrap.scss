@@ -1,0 +1,11 @@
+@layer bootstrap-fixer {
+  .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+
+    & > * {
+      width: auto;
+      flex-shrink: initial;
+    }
+  }
+}

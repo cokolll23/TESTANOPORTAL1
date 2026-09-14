@@ -1,0 +1,5 @@
+:root {
+  --kt-details-offset: var(--c-details-offset, var(--kt-ui-offset-lg));
+  --kt-details-expand-btn-gap: var(--c-details-expand-btn-gap, var(--kt-ui-offset-md));
+  --kt-details-expand-btn-icon-size: var(--c-details-expand-btn-icon-size, 16px);
+}

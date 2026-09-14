@@ -1,0 +1,1 @@
+.kt-contact-edit-messengers__list{display:flex;flex-direction:column;gap:8px;margin-top:var(--kt-ui-offset-lg)}.kt-contact-edit-messenger{display:flex;align-items:center;gap:16px}.kt-contact-edit-messenger__label{width:160px}.kt-contact-edit-messenger__input{flex-grow:1}.kt-contact-edit-messenger__remove-btn{font-size:8px;color:var(--kt-ui-icon-primary)}

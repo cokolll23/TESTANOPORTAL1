@@ -1,0 +1,8 @@
+:root {
+  --kt-widget-title-font-weight: var(--c-widget-title-font-weight, 700);
+
+  --kt-widget-title-link-size: var(--c-widget-title-link-size, 24px);
+  --kt-widget-title-link-color: var(--c-widget-title-link-color, var(--kt-ui-icon-primary));
+  --kt-widget-title-link-color-hover: var(--c-widget-title-link-color-hover, var(--kt-ui-interactive-hover));
+  --kt-widget-title-link-color-active: var(--c-widget-title-link-color-active, var(--kt-ui-interactive-active));
+}

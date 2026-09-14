@@ -1,0 +1,6 @@
+:root {
+  --kt-service-offset: var(--c-service-offset, var(--kt-ui-offset-xl));
+  --kt-service-padding: var(--c-service-padding, var(--kt-ui-offset-lg));
+  --kt-service-border-radius: var(--c-service-border-radius, var(--kt-ui-border-radius-lg));
+  --kt-service-bg: var(--c-service-bg, var(--kt-ui-layer-01));
+}

@@ -1,0 +1,1 @@
+.kt-page__left-column{order:2;padding-top:var(--kt-ui-offset-xl, 24px)}@media screen and (min-width: 768px){.kt-page__left-column{order:revert;padding-top:0}}

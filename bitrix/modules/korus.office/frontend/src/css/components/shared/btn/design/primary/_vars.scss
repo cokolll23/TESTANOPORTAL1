@@ -1,0 +1,16 @@
+.kt-btn--primary-theme {
+  --kt-btn-color: var(--kt-ui-text-on-color);
+  --kt-btn-color-hover: var(--kt-ui-text-on-color);
+  --kt-btn-color-active: var(--kt-ui-text-on-color);
+  --kt-btn-color-disabled: var(--kt-ui-text-on-color-disabled);
+
+  --kt-btn-border-color: var(--kt-ui-button-primary);
+  --kt-btn-border-color-hover: var(--kt-ui-button-primary-hover);
+  --kt-btn-border-color-active: var(--kt-ui-button-primary-active);
+  --kt-btn-border-color-disabled: var(--kt-ui-button-disabled);
+
+  --kt-btn-bg-color: var(--kt-ui-button-primary);
+  --kt-btn-bg-color-hover: var(--kt-ui-button-primary-hover);
+  --kt-btn-bg-color-active: var(--kt-ui-button-primary-active);
+  --kt-btn-bg-color-disabled: var(--kt-ui-button-disabled);
+}

@@ -1,0 +1,1 @@
+import{b as a}from"./index.a1748043.js";import{c as e}from"./vue-i18n.esm-bundler.e5a16dbd.js";import{m as t}from"./index.2f026771.js";var n=a(({app:o})=>{const r=e({locale:"ru",globalInjection:!0,messages:t});o.use(r)});export{n as default};

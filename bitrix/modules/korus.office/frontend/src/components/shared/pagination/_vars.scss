@@ -1,0 +1,9 @@
+:root {
+  --kt-pagination-btn-size: var(--c-pagination-btn-size, var(--kt-ui-btn-size-sm));
+
+  --kt-pagination-btn-color: var(--c-pagination-btn-color, var(--kt-ui-text-primary));
+  --kt-pagination-btn-active-color: var(--c-pagination-btn-active-color, var(--kt-ui-white));
+
+  --kt-pagination-btn-bg: var(--c-pagination-btn-bg, transparent);
+  --kt-pagination-btn-active-bg: var(--c-pagination-btn-active-bg, var(--kt-ui-color-primary));
+}

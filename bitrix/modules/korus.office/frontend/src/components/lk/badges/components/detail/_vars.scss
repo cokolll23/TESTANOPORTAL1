@@ -1,0 +1,10 @@
+:root {
+  --kt-badges-detail-padding: var(--c-badges-detail-padding, var(--kt-ui-offset-md));
+  --kt-badges-detail-border-radius: var(--c-badges-detail-border-radius, var(--kt-ui-border-radius-md));
+  --kt-badges-detail-color: var(--c-badges-detail-color, var(--kt-ui-text-primary));
+  --kt-badges-detail-bg: var(--c-badges-detail-bg, var(--kt-ui-layer-02));
+
+  --kt-badges-detail-image-border-color: var(--c-badges-detail-image-border-color, var(--kt-ui-white));
+
+  --kt-badges-detail-date-color: var(--c-badges-detail-date-color, var(--kt-ui-text-secondary));
+}

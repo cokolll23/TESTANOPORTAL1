@@ -1,0 +1,250 @@
+<?php
+
+namespace Lab\Helpers;
+
+use \Bitrix\Main\UserGroupTable as UserGroupTable;
+
+use Bitrix\Main\Loader;
+use Bitrix\Main\UserTable;
+use Bitrix\Main\Security\Password;
+
+Loader::includeModule('main');
+
+class UsersHelpers
+{
+
+    /**
+     * Получаем XML_ID Польз. поля пользователя  по его ID
+     */
+    public static function getUserXML_IDById($valueId)
+    {
+        $rsEnum = \CUserFieldEnum::GetList(array(), array("ID" => $valueId));
+        if ($arEnum = $rsEnum->Fetch()) {
+            $xmlId = $arEnum["XML_ID"];
+            //$value = $arEnum["VALUE"]; // Текстовое значение
+           // $id = $arEnum["ID"];       // Его ID (совпадает с переданным)
+
+        }
+        return $xmlId;
+    }
+
+    /**
+     * Получаем инфу пользователя  по его ID
+     */
+    public static function getUserInfoById($userId)
+    {
+        $user = UserTable::getList([
+            'filter' => ['=ID' => $userId],
+            'select' => ['ID', 'NAME', 'LAST_NAME','SECOND_NAME', 'EMAIL', 'UF_*'] // UF_* - все пользовательские поля
+        ])->fetch();
+        if ($user) {
+            return $user;
+        }
+
+    }
+
+
+
+
+    /**
+     * Получаем ID группы пользователей по ее символьный код группы
+     */
+
+    public static function getUsersGroupIdByUserID(int $userID)
+    {
+
+    }
+
+    /**
+     * Получаем ID юзера пользователя по его Email
+     */
+
+    public static function getUserIdIdByUserEmail($email)
+    {
+        $user = UserTable::getList([
+            'select' => ['ID'], // Выбираем только ID
+            'filter' => ['=EMAIL' => $email], // Фильтр по email
+            'limit' => 1 // На всякий случай ограничиваем одним результатом
+        ])->fetch();
+
+        if ($user) {
+            $userEmail = $user['ID'];
+            return $userEmail;
+        } else {
+            //echo "Пользователь с email " . $email . " не найден.";
+            global $APPLICATION;
+            $APPLICATION->ThrowException('Пользователь с email  ' . $email . ' не найден. ');
+            return false;
+        }
+
+    }
+
+
+    /**
+     * Получаем ID группы пользователей по ее символьный код группы
+     */
+
+    public static function getUsersGroupIdByCode(string $groupCode) : int
+    {
+        $groupId = \Bitrix\Main\GroupTable::getList([
+            'filter' => ['STRING_ID' => $groupCode],
+            'select' => ['ID'],
+            //'cache' => ['ttl' => 3600]
+        ])->fetch()['ID'];
+        return $groupId;
+    }
+
+    /**
+     * Получаем Код STRING_ID группы пользователей по ее ID
+     */
+    public static function getUsersGroupCodeByGropeID(int $groupId)
+    {
+        $groupCode = \Bitrix\Main\GroupTable::getRow([
+            'select' => ['STRING_ID', 'NAME'],
+            'filter' => ['=ID' => $groupId]
+        ])['STRING_ID'];
+        return $groupCode;
+    }
+
+    /**
+     * Получаем список активных пользователей в группе
+     */
+
+    public static function getActiveUsersInGroupId(int $groupId): array
+    {
+        $result = UserGroupTable::getList(array(
+            'filter' => array('GROUP_ID' => $groupId, 'USER.ACTIVE' => 'Y'),
+            'select' => array('USER_ID', 'NAME' => 'USER.NAME', 'LAST_NAME' => 'USER.LAST_NAME'), // выбираем идентификатор п-ля, имя и фамилию
+            'order' => array('USER.ID' => 'DESC'), // сортируем по идентификатору пользователя
+        ));
+        while ($arGroup = $result->fetch()) {
+            //Обрабатываем результат
+            $arActiveGroupUsers[$arGroup['USER_ID']] = $arGroup;
+        }
+        return $arActiveGroupUsers;
+    }
+
+    public static function registerUserWithGroup($userFields, $groupId)
+    { // https://chat.deepseek.com/a/chat/s/6093b3bf-783b-4ccc-af14-999acc92bf29
+        // Проверяем обязательные поля
+        if (empty($userFields['LOGIN']) || empty($userFields['EMAIL']) || empty($userFields['PASSWORD'])) {
+            return ['success' => false, 'message' => 'Не заполнены обязательные поля'];
+        }
+
+        // Проверка существования пользователя
+        $existingUser = UserTable::getList([
+            'filter' => [
+                'LOGIC' => 'OR',
+                ['=LOGIN' => $userFields['LOGIN']],
+                ['=EMAIL' => $userFields['EMAIL']]
+            ],
+            'select' => ['ID']
+        ])->fetch();
+
+        if ($existingUser) {
+            return ['success' => false, 'message' => 'Пользователь уже существует'];
+        }
+
+        // Хешируем пароль
+        $hashedPassword = Password::hash($userFields['PASSWORD']);
+
+        // Создаем пользователя через CUser (более удобно для регистрации)
+        $user = new \CUser;
+
+        $defaultFields = [
+            'ACTIVE' => 'Y',
+            'GROUP_ID' => [$groupId], // Основной способ указания групп
+            'CONFIRM_PASSWORD' => $userFields['PASSWORD']
+        ];
+
+        $userFields = array_merge($userFields, $defaultFields);
+
+        $userId = $user->Add($userFields);
+
+        if ($userId > 0) {
+            // Дополнительная проверка/добавление группы
+            $userGroups = \CUser::GetUserGroup($userId);
+            if (!in_array($groupId, $userGroups)) {
+                $userGroups[] = $groupId;
+                \CUser::SetUserGroup($userId, $userGroups);
+            }
+            // addUserToGroup($userId, $groupId);
+
+            $res = [
+                'success' => true,
+                'userId' => $userId,
+                'message' => 'Пользователь успешно создан'
+            ];
+        } else {
+            $res = [
+                'success' => false,
+                'message' => $user->LAST_ERROR
+            ];
+        }
+        return $res;
+
+        // Пример использования
+        /*  $newUser = [
+              'LOGIN' => 'newuser@example.com',
+              'EMAIL' => 'newuser@example.com',
+              'PASSWORD' => 'SecurePass123!',
+              'NAME' => 'Петр',
+              'LAST_NAME' => 'Петров',
+              'PHONE_NUMBER' => '+79991234567', // Дополнительное поле
+              'WORK_COMPANY' => 'Тестовая компания',
+          ];
+
+          $result = registerUserWithGroup($newUser);
+
+          if ($result['success']) {
+              echo "ID созданного пользователя: " . $result['userId'];
+          } else {
+              echo "Ошибка: " . $result['message'];
+          }*/
+    }
+
+    public static function getCurrentUserEmail()
+    {
+        // Получаем ID текущего пользователя
+        global $USER;
+        $userId = $USER->GetID();
+
+        if ($userId > 0) {
+            // Запрашиваем профиль пользователя
+            $rsUser = \CUser::GetByID($userId);
+            if ($arUser = $rsUser->Fetch()) {
+                $userEmail = $arUser["EMAIL"];
+            }
+        }
+        return $userEmail;
+    }
+    public static function getUserEmailByUserId($userId)
+    {
+        if ($userId > 0) {
+            // Запрашиваем профиль пользователя
+            $rsUser = \CUser::GetByID($userId);
+            if ($arUser = $rsUser->Fetch()) {
+                $userEmail = $arUser["EMAIL"];
+            }
+        }
+        return $userEmail;
+    }
+
+    public static function isUserByUserId($userId)
+    {
+        if ($userId > 0) {
+            $dbUser = UserTable::getList([
+                'select' => ['ID'],
+                'filter' => ['=ID' => $userId,
+                    'ACTIVE' => 'Y']
+            ]);
+            if ($arUser = $dbUser->fetch()) {
+                $isUserByUserId = 1;
+            } else {
+                $isUserByUserId = 0;
+            }
+        }
+        return $isUserByUserId;
+    }
+
+}

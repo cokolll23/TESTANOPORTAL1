@@ -1,0 +1,7 @@
+.kt-view-counter {
+  /* Defaults */
+  --kt-view-counter-size: 20px;
+  /* ======== */
+
+  --_kt-view-counter-size: var(--c-view-counter-size, var(--kt-view-counter-size));
+}

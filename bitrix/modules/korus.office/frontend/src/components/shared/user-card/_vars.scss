@@ -1,0 +1,30 @@
+:root {
+  --kt-user-card-photo-size: var(--kt-user-card-photo-size-md);
+  --kt-user-card-name-font-size: var(--kt-user-card-name-font-size-md);
+  --kt-user-card-name-line-height: var(--kt-user-card-name-line-height-md);
+  --kt-user-card-undername-font-size: var(--kt-user-card-undername-font-size-md);
+  --kt-user-card-undername-line-height: var(--kt-user-card-undername-line-height-md);
+  --kt-user-card-undername-color: var(--c-user-card-undername-color, var(--kt-ui-text-secondary));
+
+  --kt-user-card-photo-size-sm: var(--c-user-card-photo-size-sm, 40px);
+  --kt-user-card-photo-size-md: var(--c-user-card-photo-size-md, 39px);
+  --kt-user-card-photo-size-lg: var(--c-user-card-photo-size-lg, 60px);
+
+  --kt-user-card-name-font-size-sm: var(--c-user-card-name-font-size-sm, 14px);
+  --kt-user-card-name-line-height-sm: var(--c-user-card-name-line-height-sm, 1.25);
+
+  --kt-user-card-name-font-size-md: var(--c-user-card-name-font-size-md, 15px);
+  --kt-user-card-name-line-height-md: var(--c-user-card-name-line-height-md, 1.33);
+
+  --kt-user-card-name-font-size-lg: var(--c-user-card-name-font-size-lg, 18px);
+  --kt-user-card-name-line-height-lg: var(--c-user-card-name-line-height-lg, 1.38);
+
+  --kt-user-card-undername-font-size-sm: var(--c-user-card-undername-font-size-sm, 14px);
+  --kt-user-card-undername-line-height-sm: var(--c-user-card-undername-line-height-sm, 1.25);
+
+  --kt-user-card-undername-font-size-md: var(--c-user-card-undername-font-size-md, 15px);
+  --kt-user-card-undername-line-height-md: var(--c-user-card-undername-line-height-md, 1.33);
+
+  --kt-user-card-undername-font-size-lg: var(--c-user-card-undername-font-size-lg, 18px);
+  --kt-user-card-undername-line-height-lg: var(--c-user-card-undername-line-height-lg, 1.38);
+}

@@ -1,0 +1,15 @@
+.kt-tag--purple-theme.q-chip--outline {
+  --kt-tag-color: var(--kt-ui-tag-purple-50);
+
+  &:not(.q-chip--selected).q-chip--clickable:hover {
+    --kt-tag-color: var(--kt-ui-tag-purple-50-hover);
+  }
+
+  &.q-chip--selected {
+    --kt-tag-color: var(--kt-ui-white);
+    --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-purple-50-hover);
+
+    border-color: var(--kt-ui-tag-purple-50) !important;
+    background-color: var(--kt-ui-tag-purple-50) !important;
+  }
+}

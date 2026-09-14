@@ -1,0 +1,7 @@
+.kt-btn-dropdown .q-btn-dropdown__arrow {
+  mask: var(--kt-ui-select-arrow) no-repeat 50%;
+  flex-shrink: 0;
+  margin-left: 0;
+  font-size: 16px;
+  background-color: currentColor;
+}

@@ -1,0 +1,15 @@
+.kt-tag--default-theme.q-chip--outline {
+  --kt-tag-color: var(--kt-ui-tag-default);
+
+  &:not(.q-chip--selected).q-chip--clickable:hover {
+    --kt-tag-color: var(--kt-ui-tag-default-hover);
+  }
+
+  &.q-chip--selected {
+    --kt-tag-color: var(--kt-ui-white);
+    --kt-tag-remove-btn-bg-hover: var(--kt-ui-tag-default-hover);
+
+    border-color: var(--kt-ui-tag-default) !important;
+    background-color: var(--kt-ui-tag-default) !important;
+  }
+}
