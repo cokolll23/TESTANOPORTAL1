@@ -4,11 +4,13 @@ namespace Lab\EventsHandlers;
 
 use Bitrix\Main\Loader;
 use Bitrix\Iblock\PropertyTable;
+use Bitrix\Iblock\IblockTable;
+use Lab\Helpers\IblockHelpers;
 
 class SotrudnikiUpdateHandler
 {
     // ID инфоблока "Сотрудники" (замените на реальный ID)
-    const IBLOCK_ID = 42; // Укажите ваш ID инфоблока
+    // Укажите ваш ID инфоблока
 
     // Символьный код инфоблока (если ID может меняться)
     const IBLOCK_CODE = 'sotrudniki';
@@ -25,8 +27,9 @@ class SotrudnikiUpdateHandler
      */
     public static function onBeforeUpdate(&$arFields)
     {
+        $iblock_id = IblockHelpers::getIblockIdByCode('sotrudniki');
         // Проверяем, что обновляется нужный инфоблок
-        if ($arFields['IBLOCK_ID'] != self::IBLOCK_ID) {
+        if ($arFields['IBLOCK_ID'] !=  $iblock_id) {
             return;
         }
 
@@ -40,9 +43,11 @@ class SotrudnikiUpdateHandler
             return;
         }
 
+
+
         // Получаем текущие (старые) значения свойств из БД
         $res = \CIBlockElement::GetProperty(
-            self::IBLOCK_ID,
+            $iblock_id,
             $arFields['ID'],
             [],
             []
@@ -72,9 +77,9 @@ class SotrudnikiUpdateHandler
         if (self::$isProcessing) {
             return;
         }
-
+        $iblock_id = IblockHelpers::getIblockIdByCode('sotrudniki');
         // Проверяем, что обновление прошло успешно и это нужный инфоблок
-        if ($arFields['RESULT'] !== true || $arFields['IBLOCK_ID'] != self::IBLOCK_ID) {
+        if ($arFields['RESULT'] !== true || $arFields['IBLOCK_ID'] != $iblock_id) {
             return;
         }
 
@@ -86,7 +91,6 @@ class SotrudnikiUpdateHandler
         // Указываем код свойства, которое нужно отслеживать
         // ЗАМЕНИТЕ 'KOLICHESTVO' на реальный символьный код свойства
         $targetPropertyCode = 'KOLICHESTVO';
-
         $newValue = null;
         $oldValue = null;
 
@@ -101,7 +105,7 @@ class SotrudnikiUpdateHandler
 
             // Получаем текущие (старые) значения свойств из БД
             $res = \CIBlockElement::GetProperty(
-                self::IBLOCK_ID,
+                $iblock_id,
                 $arFields['ID'],
                 [],
                 []
@@ -149,12 +153,12 @@ class SotrudnikiUpdateHandler
              $headers .= "MIME-Version: 1.0\r\n";*/
             if (!empty($arBoolMore)) {
 
-                $email = $arFields['CODE'];
+                //$email = $arFields['CODE'];
                 $email = 'cavjob@ya.ru';
                 $subject = 'Уведомление об изменении показателя';
-                $log1 = date('Y-m-d H:i:s') . ' OnAfterIBlockElementUpdateHandler ' . print_r($arFields, true);
+                $log1 = date('Y-m-d H:i:s') . ' OnAfterIBlockElementUpdateHandler ' . print_r($arBoolMore, true);
                 $log = date('Y-m-d H:i:s') . PHP_EOL . PHP_EOL . ' Вам начислено в Магазине бонусов баллы : ' . PHP_EOL . PHP_EOL . $message;
-                file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/logDiff.txt', $log1 . PHP_EOL, FILE_APPEND);
+                file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/logDiff.txt', $log . PHP_EOL, FILE_APPEND);
 
                 mail($email, $subject, $log);
             }
