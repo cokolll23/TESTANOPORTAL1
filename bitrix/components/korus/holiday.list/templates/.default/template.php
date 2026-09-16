@@ -24,6 +24,7 @@ $arMonths = [
 $futureYear = new DateTime('01.01.' . (date('Y') + 1));
 
 $arResult['TYPES'] = array_merge(['OUT_OF_PLAN' => GetMessage("BITRIX_PLANNER_OUT_OF_PLAN")], $arResult['TYPES']);
+pretty_print($arResult);
 ?>
 
 <div id="holidays">
@@ -314,28 +315,28 @@ $arResult['TYPES'] = array_merge(['OUT_OF_PLAN' => GetMessage("BITRIX_PLANNER_OU
             <div class="planner_toper-right">
                 <div class="planner_descr-wrap">
                     <table style="border-collapse:collapse">
-                        <tr>
+                  <!--      <tr>
                             <td class="day-color day-thumb"></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_OTMECENO_NE_SOHRANE") ?></td>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_OTMECENO_NE_SOHRANE") */?></td>
                         </tr>
                         <tr>
                             <td class="day-color day-saved"></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_SOGL") ?></td>
-                        </tr>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_SOGL") */?></td>
+                        </tr>-->
                         <?php
                         foreach ($arResult['TYPES'] as $k => $v) { ?>
                             <tr <?
                                 if ($k != 'VACATION' && $k != 'LEAVEUNPAYED' && $k != 'PREGNANT' && $k != 'CHILD') { ?>class="hidden"<?
                             } ?>>
                                 <td class="day-color mark-<?= strtolower($k); ?>"></td>
-                                <td class="spmin"><?= htmlspecialcharsbx($v); ?></td>
+                                <td class="spmin"><?= htmlspecialcharsbx($v); ?>6</td>
                             </tr>
                             <?php
                         } ?>
-                        <tr>
+                       <!-- <tr>
                             <td class="day-color day-transfer day-transfer-other shtrix"></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_PERENOS") ?></td>
-                        </tr>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_PERENOS") */?></td>
+                        </tr>-->
                         <tr>
                             <td class="day-color mark-assignment"></td>
                             <td class="spmin"><?= GetMessage("BITRIX_PLANNER_ASSIG") ?></td>
@@ -348,14 +349,14 @@ $arResult['TYPES'] = array_merge(['OUT_OF_PLAN' => GetMessage("BITRIX_PLANNER_OU
                             <td class="day-color mark-other"></td>
                             <td class="spmin"><?= GetMessage("BITRIX_PLANNER_SOHRANENO_NO_NE_POD") ?></td>
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td class="day-color mark-plan_change"></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_PLAN_CHANGE") ?></td>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_PLAN_CHANGE") */?></td>
                         </tr>
                         <tr>
                             <td class="day-color mark-out_of_plan" width=20></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_OUT_OF_PLAN") ?></td>
-                        </tr>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_OUT_OF_PLAN") */?></td>
+                        </tr>-->
                     </table>
                 </div>
             </div>
@@ -645,6 +646,9 @@ $arResult['TYPES'] = array_merge(['OUT_OF_PLAN' => GetMessage("BITRIX_PLANNER_OU
             <?
             endforeach; ?>
             <?php
+
+            // Запланированные отсутствия
+            //
             if (count($arResult['PERIOD'])) { ?>
                 <div class="planner_period">
                     <table style="border-collapse:collapse">
