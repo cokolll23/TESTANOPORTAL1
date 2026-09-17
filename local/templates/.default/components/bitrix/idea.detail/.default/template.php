@@ -161,8 +161,6 @@
                                     value="[]"
                             >
 
-
-
                             <button
                                     type="button"
                                     class="ui-btn ui-btn-primary select-user-button"
@@ -177,6 +175,7 @@
                             >
                                 Создать задачи
                             </button>
+                            <div id="massege" class="massege"></div>
                             <div
                                     class="selected-user-info"
                                     style="margin: 10px 0;"
@@ -344,6 +343,9 @@
         </div>
     </div>
 <? endif; ?>
+
+
+
 <script>
     BX.ready(function () {
         const root = document.getElementById('bp-<?= $postId ?>');
@@ -504,6 +506,10 @@
                             message += ' Ошибок: ' + errorCount + '.';
                             console.error('Ошибки создания задач:', response.errors);
                         }
+                        createTasksButton.disabled = false;
+                        createTasksButton.classList.remove('ui-btn-wait');
+
+                        $('#massege').html(message);
 
                         showNotification(message);
                         return;
@@ -521,8 +527,7 @@
                 },
 
                 oncomplete: function () {
-                    createTasksButton.disabled = false;
-                    createTasksButton.classList.remove('ui-btn-wait');
+
                 }
             });
         });
