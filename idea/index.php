@@ -1781,11 +1781,6 @@
                     throw new Error(
                         result.message || 'Не удалось отправить идею.'
                     );
-                }else{
-// отправляем установить UF_STATUS в положение Новые XML_ID= NEW ID=1
-                    //
-                    // https://test-portal.welcome.moscow/services/idea/?AJAX=IDEA&ACTION=SET_STATUS&IDEA_ID=126&STATUS_ID=1&sessid=4a54c700533ca33008044ad8365b11a2
-
                 }
 
                 messageElement.classList.add('is-success');

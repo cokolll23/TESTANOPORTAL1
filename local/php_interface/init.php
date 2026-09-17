@@ -19,8 +19,6 @@ if (file_exists(__DIR__ . '/src/autoloader.php')) {
 if (file_exists(__DIR__ . '/includes/pretty-print/pretty_print.php')) {
     require_once __DIR__ . '/includes/pretty-print/pretty_print.php';
 }
-
-
 use Lab\EventsHandlers\IblockEventsHandlers as EH;
 use Lab\EventsHandlers\UserEventsHandlers as ueh;
 use Lab\Helpers\IblockHelpers as IH;
@@ -30,15 +28,12 @@ use Lab\Helpers\RecalculateScores as RS;
 use Bitrix\Main\Loader;
 use Bitrix\Main\UserTable;
 
-
-
-
 //\Bitrix\Main\UI\Extension::load('lab.mainjs'); , BaryshevaAD1@mos.ru, StarenkoOG@mos.ru, PORT-communications@mos.ru
 //CUtil::InitJSCore(array('jquery3', 'popup', 'ajax', 'date'));
 
 
 \Bitrix\Main\UI\Extension::load('lab.functions');
-\Bitrix\Main\UI\Extension::load('lab.lk1');
+\Bitrix\Main\UI\Extension::load('lab.idea');
 
 $eventManager = \Bitrix\Main\EventManager::getInstance();
 
