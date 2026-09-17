@@ -24,7 +24,7 @@ const MODERATION_MANAGER_GROUP_ID = 12;
 /**
  * Адрес сайта без завершающего слеша.
  */
-const MODERATION_SITE_URL = 'https://example.ru';
+const MODERATION_SITE_URL = 'https://test-portal.welcome.moscow';
 
 /**
  * Отправляет JSON и завершает обработчик.
@@ -183,7 +183,7 @@ $postTitle = 'Публикация №' . $postId;
 /**
  * Замените маршрут на реальный адрес страницы публикации.
  */
-$postPath = '/moderation/post/' . $postId . '/';
+$postPath = '/services/idea/' . $postId . '/';
 $postUrl = MODERATION_SITE_URL . $postPath;
 
 $users = [];
@@ -221,7 +221,7 @@ foreach ($userIds as $responsibleUserId) {
 
     $user = $users[$responsibleUserId];
 
-    $taskTitle = 'Модерация: ' . $postTitle;
+    $taskTitle = 'Создана Идея в банке идей: ' . $postTitle;
 
     $taskDescription =
         "Необходимо проверить публикацию.\n\n"

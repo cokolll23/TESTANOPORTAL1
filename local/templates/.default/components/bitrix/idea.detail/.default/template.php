@@ -161,11 +161,7 @@
                                     value="[]"
                             >
 
-                            <div
-                                    class="selected-user-info"
-                                    style="margin: 10px 0;"
-                                    aria-live="polite"
-                            ></div>
+
 
                             <button
                                     type="button"
@@ -181,6 +177,11 @@
                             >
                                 Создать задачи
                             </button>
+                            <div
+                                    class="selected-user-info"
+                                    style="margin: 10px 0;"
+                                    aria-live="polite"
+                            ></div>
                         </div>
                     <!--</div>-->
 
@@ -486,7 +487,7 @@
                 dataType: 'json',
                 data: {
                     sessid: BX.bitrix_sessid(),
-                    postId: 467,//postId,
+                    postId: postId,
                     userIds: JSON.stringify(userIds)
                 },
 
