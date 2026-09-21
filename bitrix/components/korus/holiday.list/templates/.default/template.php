@@ -23,7 +23,7 @@ $arMonths = [
 ];
 $futureYear = new DateTime('01.01.' . (date('Y') + 1));
 
-$arResult['TYPES'] = array_merge(['OUT_OF_PLAN' => GetMessage("BITRIX_PLANNER_OUT_OF_PLAN")], $arResult['TYPES']);
+//$arResult['TYPES'] = array_merge(['OUT_OF_PLAN' => GetMessage("BITRIX_PLANNER_OUT_OF_PLAN")], $arResult['TYPES']);
 pretty_print($arResult);
 ?>
 
@@ -325,11 +325,9 @@ pretty_print($arResult);
                         </tr>-->
                         <?php
                         foreach ($arResult['TYPES'] as $k => $v) { ?>
-                            <tr <?
-                                if ($k != 'VACATION' && $k != 'LEAVEUNPAYED' && $k != 'PREGNANT' && $k != 'CHILD') { ?>class="hidden"<?
-                            } ?>>
+                            <tr >
                                 <td class="day-color mark-<?= strtolower($k); ?>"></td>
-                                <td class="spmin"><?= htmlspecialcharsbx($v); ?>6</td>
+                                <td class="spmin"><?= htmlspecialcharsbx($v); ?></td>
                             </tr>
                             <?php
                         } ?>
@@ -337,18 +335,18 @@ pretty_print($arResult);
                             <td class="day-color day-transfer day-transfer-other shtrix"></td>
                             <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_PERENOS") */?></td>
                         </tr>-->
-                        <tr>
+                       <!-- <tr>
                             <td class="day-color mark-assignment"></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_ASSIG") ?></td>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_ASSIG") */?></td>
                         </tr>
                         <tr>
                             <td class="day-color mark-leavesick"></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_SICK") ?></td>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_SICK") */?></td>
                         </tr>
                         <tr>
                             <td class="day-color mark-other"></td>
-                            <td class="spmin"><?= GetMessage("BITRIX_PLANNER_SOHRANENO_NO_NE_POD") ?></td>
-                        </tr>
+                            <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_SOHRANENO_NO_NE_POD") */?></td>
+                        </tr>-->
                         <!--<tr>
                             <td class="day-color mark-plan_change"></td>
                             <td class="spmin"><?php /*= GetMessage("BITRIX_PLANNER_PLAN_CHANGE") */?></td>
