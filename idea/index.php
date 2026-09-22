@@ -1156,7 +1156,6 @@
     <div class="form-step" data-step="1">
         <h3>Шаг 1: Кому поможет идея?</h3>
         <p>Выберите один или несколько вариантов.</p>
-
         <fieldset class="checkbox-group" data-required-group="audience">
             <legend class="visually-hidden">Кому поможет идея</legend>
 
@@ -1815,92 +1814,8 @@
         showStep(0);
     });
 </script>
-<?php
-\Bitrix\Main\UI\Extension::load('ui.text-editor');
-?>
-
-<div id="editor-container"></div>
-<?
-$ID = 468;
-$arPost = CBlogPost::GetByID($ID);
-if(is_array($arPost))
-    pretty_print($arPost);
-else
-    echo "Сообщение не найдено";
-?>
-<?
-$ID = 115;
-$arPost = CBlogPost::GetByID($ID);
-if(is_array($arPost))
-    pretty_print($arPost);
-else
-    echo "Сообщение не найдено";
-?>
-<?
-// выберем все опубликованные сообщения всех блогов за апрель 2007 года
-// у которых больше двух комментариев
-$SORT = Array("DATE_PUBLISH" => "DESC", "NAME" => "ASC");
-$arFilter = Array(
-
-);
-$dbPosts = CBlogPost::GetList(
-        $SORT,
-        $arFilter
-);
-while ($arPost = $dbPosts->Fetch())
-{
-    $arPosts[] = $arPost;
-}
-pretty_print($arPosts);
-?>
-<script>
-    BX.ready(function () {
-        const container = document.getElementById('editor-container');
-
-        const editor = new BX.UI.TextEditor.TextEditor({
-            content: '<p>Начальный текст</p>',
-            placeholder: 'Введите текст...',
-            autoFocus: false
-        });
-
-        editor.renderTo(container);
-
-        // При необходимости сохраняем ссылку на редактор
-        window.myTextEditor = editor;
-    });
-</script>
-<?php
-
-use Bitrix\Main\Loader;
 
 
-if (!Loader::includeModule('iblock')) {
-    throw new RuntimeException('Модуль iblock не установлен');
-}
-
-
-
-// Получаем один элемент, относящийся к текущему пользователю
-$res = CIBlockElement::GetList(
-    ['ACTIVE_FROM' => 'DESC'],
-    [
-        'IBLOCK_ID'    => 1,
-        'ACTIVE'       => 'Y',
-        //'=PROPERTY_USER' => 189,
-    ],
-    false,
-    [],
-    [
-        'ID',
-
-    ]
-);
-
-while ($arItem = $res->fetch()) {
-   /* echo "<pre>";
-    print_r($arItem);
-    echo "</pre>";*/
-}?>
 
 
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
