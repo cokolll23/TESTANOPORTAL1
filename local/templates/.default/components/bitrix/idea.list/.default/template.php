@@ -667,7 +667,8 @@ Bitrix\Main\UI\Extension::load([
                 function buildTaskLinks(obj) {
                     return 'Создана(ы) задача(и): <br>'+Object.values(obj)
                         .map(function (postId) {
-                            return '<a class="task-success-link" href="/company/personal/user/911/tasks/task/view/' + postId + '/">Задача №' + postId + '</a><br>';
+                            return 'Перейти к <a class="task-success-link" href="/company/personal/user/<?= $currUserId;?>/tasks/task/view/' + postId.taskId + '/">Задаче №' + postId.taskId + '' +
+                                ' ответственный ' + postId.userFio +'</a><br>';
                         })
                         .join(' ');
                 }

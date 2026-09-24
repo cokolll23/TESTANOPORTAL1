@@ -31,8 +31,9 @@ const MODERATION_SITE_URL = 'https://test-portal.welcome.moscow';
  */
 function sendJsonResponse(
     array $response,
-    int $httpStatus = 200
-): void {
+    int   $httpStatus = 200
+): void
+{
     http_response_code($httpStatus);
 
     header('Content-Type: application/json; charset=UTF-8');
@@ -93,7 +94,7 @@ if (!Loader::includeModule('tasks')) {
 }
 
 $postId = (int)$request->getPost('postId');
-$author = (int)$request->getPost('author');
+$author = [(int)$request->getPost('author')];
 
 if ($postId <= 0) {
     sendJsonResponse([
@@ -210,6 +211,16 @@ while ($user = $userResult->fetch()) {
 $createdTasks = [];
 $errors = [];
 
+function getFio($userId)
+{
+    $result = CUser::GetByID($userId);
+    if ($user = $result->Fetch()) {
+        $fio = $user['LAST_NAME'] .' '. $user['NAME'];
+    } else {
+        $fio = 'Пользователь не найден.';
+    }
+    return $fio;
+};
 foreach ($userIds as $responsibleUserId) {
     if (!isset($users[$responsibleUserId])) {
         $errors[] = [
@@ -257,6 +268,7 @@ foreach ($userIds as $responsibleUserId) {
             . '/';
 
         $createdTasks[] = [
+            'fio' => getFio($responsibleUserId),
             'taskId' => $taskId,
             'userId' => $responsibleUserId,
         ];

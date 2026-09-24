@@ -1,8 +1,14 @@
-<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+global $USER;
+$currUserId = $USER->GetID();
+?>
 <style>
     .ui-notification-balloon {
        right: 50%!important;
         top: 15%!important;
+    }
+    .task-success-link {
+      color: green;
     }
 </style>
 <div class="blog-post-current" id="blog-post-<?= $arParams["ID"] ?>">
@@ -353,7 +359,9 @@
             <div class="tag-tbb"></div>
         </div>
     </div>
-<? endif; ?>
+<?
+    $author = $arResult["Post"]["AUTHOR_ID"];
+endif; ?>
 
 
 
@@ -442,8 +450,10 @@
 
         function buildTaskLinks(obj) {
             return 'Создана(ы) задача(и): <br>'+Object.values(obj)
-                .map(function (postId) {
-                    return '<a class="task-success-link" href="/company/personal/user/911/tasks/task/view/' + postId + '/">Задача №' + postId + '</a><br>';
+                .map(function (taskID) {
+                    return 'Перейти к <a class="task-success-link" href="/company/personal/user/<?= $currUserId;?>/tasks/task/view/' +
+                        taskID.taskId +
+                        '/">Задаче №' + taskID.taskId + ' ответственный '+taskID.fio+'</a><br>';
                 })
                 .join(' ');
         }
@@ -494,7 +504,7 @@
         BX.bind(createTasksButton, 'click', function () {
             const userIds = Array.from(selectedUsers.keys());
 
-            const author = $(this).data('author');
+            const author = '<?= $author;?>' ;//$(this).data('author');
 
             if (userIds.length === 0) {
                 showNotification('Выберите хотя бы одного модератора.');
@@ -524,6 +534,7 @@
 
                         let message = 'Создано задач: ' + createdCount + '.';
 
+
                         if (errorCount > 0) {
                             message += ' Ошибок: ' + errorCount + '.';
                             console.error('Ошибки создания задач:', response.errors);
@@ -531,7 +542,8 @@
                         createTasksButton.disabled = false;
                         createTasksButton.classList.remove('ui-btn-wait');
 
-                        $('#massege').html(message);
+                        $('#massege').html(buildTaskLinks(response.createdTasks));
+                        console.log(response.createdTasks);
 
                         showNotification(message);
                         return;

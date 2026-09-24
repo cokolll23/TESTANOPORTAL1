@@ -26,6 +26,16 @@ function sendJson(array $data): void
     echo Json::encode($data);
     die();
 }
+function getFio($userId)
+{
+    $result = CUser::GetByID($userId);
+    if ($user = $result->Fetch()) {
+        $fio = $user['LAST_NAME'] .' '. $user['NAME'];
+    } else {
+        $fio = 'Пользователь не найден.';
+    }
+    return $fio;
+};
 
 /**
  * Проверка права на создание задач для конкретной идеи.
@@ -193,10 +203,11 @@ $taskDescription = sprintf(
 $createdTasks = [];
 $errors = [];
 
+
 /*
  * Создаётся отдельная задача для каждого пользователя.
  */
-foreach ($validUserIds as $responsibleId) {
+foreach ($validUserIds as $i => $responsibleId) {
     try {
         $task = new CTasks();
 
@@ -214,7 +225,8 @@ foreach ($validUserIds as $responsibleId) {
         ]);
 
         if ($taskId) {
-            $createdTasks[(string)$responsibleId] = (int)$taskId;
+            $createdTasks[(string)$responsibleId]['taskId'] = (int)$taskId;
+            $createdTasks[(string)$responsibleId]['userFio'] = getFio((int)$taskId);
         } else {
             $errors[] = [
                 'userId' => $responsibleId,
