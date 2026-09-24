@@ -93,6 +93,7 @@ if (!Loader::includeModule('tasks')) {
 }
 
 $postId = (int)$request->getPost('postId');
+$author = (int)$request->getPost('author');
 
 if ($postId <= 0) {
     sendJsonResponse([
@@ -236,6 +237,7 @@ foreach ($userIds as $responsibleUserId) {
             'DESCRIPTION_IN_BBCODE' => 'Y',
             'CREATED_BY' => $currentUserId,
             'RESPONSIBLE_ID' => $responsibleUserId,
+            'ACCOMPLICES' => $author,// массив идентификаторов соисполнителей;
             'PRIORITY' => 1,
         ]);
 

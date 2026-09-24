@@ -1,18 +1,16 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 // GetMessage("IDEA_STATUS_NEW"); GetMessage("IDEA_STATUS_PROCESSING"); GetMessage("IDEA_STATUS_COMPLETED");
 
 pretty_print($arResult);
-if(!empty($arResult["OK_MESSAGE"]))
-{
+if (!empty($arResult["OK_MESSAGE"])) {
     ?>
     <div class="blog-notes blog-note-box">
         <div class="blog-note-text">
             <ul>
                 <?
-                foreach($arResult["OK_MESSAGE"] as $v)
-                {
+                foreach ($arResult["OK_MESSAGE"] as $v) {
                     ?>
-                    <li><?=$v?></li>
+                    <li><?= $v ?></li>
                     <?
                 }
                 ?>
@@ -21,17 +19,15 @@ if(!empty($arResult["OK_MESSAGE"]))
     </div>
     <?
 }
-if(!empty($arResult["MESSAGE"]))
-{
+if (!empty($arResult["MESSAGE"])) {
     ?>
     <div class="blog-textinfo blog-note-box">
         <div class="blog-textinfo-text">
             <ul>
                 <?
-                foreach($arResult["MESSAGE"] as $v)
-                {
+                foreach ($arResult["MESSAGE"] as $v) {
                     ?>
-                    <li><?=$v?></li>
+                    <li><?= $v ?></li>
                     <?
                 }
                 ?>
@@ -40,17 +36,15 @@ if(!empty($arResult["MESSAGE"]))
     </div>
     <?
 }
-if(!empty($arResult["ERROR_MESSAGE"]))
-{
+if (!empty($arResult["ERROR_MESSAGE"])) {
     ?>
     <div class="blog-errors blog-note-box blog-note-error">
         <div class="blog-error-text">
             <ul>
                 <?
-                foreach($arResult["ERROR_MESSAGE"] as $v)
-                {
+                foreach ($arResult["ERROR_MESSAGE"] as $v) {
                     ?>
-                    <li><?=$v?></li>
+                    <li><?= $v ?></li>
                     <?
                 }
                 ?>
@@ -61,6 +55,9 @@ if(!empty($arResult["ERROR_MESSAGE"]))
 }
 ?>
 <?php
+global $USER;
+
+$currUserId = $USER->GetID();
 
 Bitrix\Main\UI\Extension::load([
         'main.core',
@@ -70,6 +67,13 @@ Bitrix\Main\UI\Extension::load([
 ]);
 ?>
 <style>
+    .popup-window.--open {
+        margin-top: 25px;
+    }
+    .task-success-link {
+        color: green;
+    }
+
     .idea-moderation {
         margin-top: 16px;
     }
@@ -143,22 +147,21 @@ Bitrix\Main\UI\Extension::load([
 </style>
 <div id="idea-posts-content">
     <?
-    if(count($arResult["POST"] ?? [])>0)
-    {
+    if (count($arResult["POST"] ?? []) > 0) {
         $arStatusList = CIdeaManagment::getInstance()->Idea()->GetStatusList();
-        foreach($arResult["POST"] as $CurPost)
-        {
-            ?><div id="blog-post-<?=$CurPost["ID"]?>"><?
-            if($arParams["SHOW_RATING"] == "Y"):?>
+        foreach ($arResult["POST"] as $CurPost) {
+            ?>
+            <div id="blog-post-<?= $CurPost["ID"] ?>"><?
+            if ($arParams["SHOW_RATING"] == "Y"):?>
                 <div class="idea-rating-block">
 			<span class="idea-rating-block-left">
 				<span class="idea-rating-block-right">
-					<span class="idea-rating-block-content idea-rating-block-content-ext-<?=$arParams['RATING_TEMPLATE']?>">
-						<span class="idea-rating-block-content-description"><?=GetMessage("IDEA_RATING_TITLE");?>:</span>
-						<?$APPLICATION->IncludeComponent(
+					<span class="idea-rating-block-content idea-rating-block-content-ext-<?= $arParams['RATING_TEMPLATE'] ?>">
+						<span class="idea-rating-block-content-description"><?= GetMessage("IDEA_RATING_TITLE"); ?>:</span>
+						<? $APPLICATION->IncludeComponent(
                                 "bitrix:rating.vote", $arParams['RATING_TEMPLATE'],
-                                Array(
-                                        "VOTE_AVAILABLE" => $CurPost["DISABLE_VOTE"]?"N":"Y",
+                                array(
+                                        "VOTE_AVAILABLE" => $CurPost["DISABLE_VOTE"] ? "N" : "Y",
                                         "ENTITY_TYPE_ID" => "BLOG_POST",
                                         "ENTITY_ID" => $CurPost["ID"],
                                         "OWNER_ID" => $CurPost["arUser"]["ID"],
@@ -172,25 +175,30 @@ Bitrix\Main\UI\Extension::load([
                                 ),
                                 false,
                                 array("HIDE_ICONS" => "Y")
-                        );?>
+                        ); ?>
 					</span>
 				</span>
 			</span>
                 </div>
             <?endif;
-            $status = GetMessage("IDEA_STATUS_".mb_strtoupper($arStatusList[$CurPost["POST_PROPERTIES"]["DATA"]["UF_STATUS"]["VALUE"]]["XML_ID"]));
-            if($status == '')
+            $status = GetMessage("IDEA_STATUS_" . mb_strtoupper($arStatusList[$CurPost["POST_PROPERTIES"]["DATA"]["UF_STATUS"]["VALUE"]]["XML_ID"]));
+            if ($status == '')
                 $status = $arStatusList[$CurPost["POST_PROPERTIES"]["DATA"]["UF_STATUS"]["VALUE"]]["VALUE"];
             ?>
-            <div class="blog-qtl<?if(in_array($CurPost["PUBLISH_STATUS"], array(BLOG_PUBLISH_STATUS_READY, BLOG_PUBLISH_STATUS_DRAFT))):?> blog-post-hidden<?endif;?>">
+            <div class="blog-qtl<? if (in_array($CurPost["PUBLISH_STATUS"], array(BLOG_PUBLISH_STATUS_READY, BLOG_PUBLISH_STATUS_DRAFT))):?> blog-post-hidden<?endif; ?>">
                 <div class="blog-qtr">
                     <div class="blog-idea-body">
                         <div class="idea-owner">
-                            <div class="bx-idea-condition-description status-color-<?=mb_strtolower($arStatusList[$CurPost["POST_PROPERTIES"]["DATA"]["UF_STATUS"]["VALUE"]]["XML_ID"]);?>">
-                                <div <?if($arResult["IDEA_MODERATOR"]):?>class="status-action idea-action-cursor" onclick="JSPublicIdea.ShowStatusDialog(this, '<?=$CurPost["ID"]?>')" id="status-<?=$CurPost["ID"]?>"<?endif;?>><?=htmlspecialcharsbx($status)?></div>
+                            <div class="bx-idea-condition-description status-color-<?= mb_strtolower($arStatusList[$CurPost["POST_PROPERTIES"]["DATA"]["UF_STATUS"]["VALUE"]]["XML_ID"]); ?>">
+                                <div <? if ($arResult["IDEA_MODERATOR"]): ?>class="status-action idea-action-cursor"
+                                     onclick="JSPublicIdea.ShowStatusDialog(this, '<?= $CurPost["ID"] ?>')"
+                                     id="status-<?= $CurPost["ID"] ?>"<?endif;
+                                ?>><?= htmlspecialcharsbx($status) ?></div>
                             </div>
-                            <?=GetMessage("IDEA_INTRODUCED_TITLE")?> <img class="idea-user-avatar" src="<?=$arResult["AUTHOR_AVATAR"][$CurPost["arUser"]["ID"]]["src"]?>" align="top">
-                            <?if (COption::GetOptionString("blog", "allow_alias", "Y") == "Y" && array_key_exists("ALIAS", $CurPost["BlogUser"]) && $CurPost["BlogUser"]["ALIAS"] <> '')
+                            <?= GetMessage("IDEA_INTRODUCED_TITLE") ?> <img class="idea-user-avatar"
+                                                                            src="<?= $arResult["AUTHOR_AVATAR"][$CurPost["arUser"]["ID"]]["src"] ?>"
+                                                                            align="top">
+                            <? if (COption::GetOptionString("blog", "allow_alias", "Y") == "Y" && array_key_exists("ALIAS", $CurPost["BlogUser"]) && $CurPost["BlogUser"]["ALIAS"] <> '')
                                 $arTmpUser = array(
                                         "NAME" => "",
                                         "LAST_NAME" => "",
@@ -205,12 +213,13 @@ Bitrix\Main\UI\Extension::load([
                                         "LOGIN" => $CurPost["arUser"]["~LOGIN"],
                                         "NAME_LIST_FORMATTED" => "",
                                 );
-                            ?><noindex>
-                                <?$APPLICATION->IncludeComponent("bitrix:main.user.link",
+                            ?>
+                            <noindex>
+                                <? $APPLICATION->IncludeComponent("bitrix:main.user.link",
                                         '',
                                         array(
                                                 "ID" => $CurPost["arUser"]["ID"],
-                                                "HTML_ID" => "blog_blog_".$CurPost["arUser"]["ID"],
+                                                "HTML_ID" => "blog_blog_" . $CurPost["arUser"]["ID"],
                                                 "NAME" => $arTmpUser["NAME"],
                                                 "LAST_NAME" => $arTmpUser["LAST_NAME"],
                                                 "SECOND_NAME" => $arTmpUser["SECOND_NAME"],
@@ -237,15 +246,15 @@ Bitrix\Main\UI\Extension::load([
                                 );
                                 ?>
                             </noindex>
-                            <?=$CurPost["DATE_PUBLISH_FORMATED"]?>
+                            <?= $CurPost["DATE_PUBLISH_FORMATED"] ?>
                         </div>
 
-                        <?  pretty_print($CurPost);?>
-
+                        <? pretty_print($CurPost); ?>
 
 
                         <div class="post-title"><h2>
-                                <a href="<?=$CurPost["urlToPost"]?>" title="<?=$CurPost["TITLE"]?>"><?=$CurPost["TITLE"]?></a></h2>
+                                <a href="<?= $CurPost["urlToPost"] ?>"
+                                   title="<?= $CurPost["TITLE"] ?>"><?= $CurPost["TITLE"] ?></a></h2>
                         </div>
                         <!-- Пример уникального контейнера для каждого поста -->
                         <?php
@@ -265,13 +274,15 @@ Bitrix\Main\UI\Extension::load([
                             <div class="idea-moderation__actions">
                                 <button
                                         type="button"
-                                        class="ui-btn ui-btn-light-border ui-btn-sm"
+                                        class="ui-btn ui-btn-primary ui-btn-sm"
                                         data-role="select-moderators"
+                                        disabled
                                 >
                                     Выбрать модераторов
                                 </button>
 
                                 <button
+                                        id="c-<?= $CurPost["ID"] ?>"
                                         type="button"
                                         class="ui-btn ui-btn-primary ui-btn-sm"
                                         data-role="create-tasks"
@@ -283,32 +294,31 @@ Bitrix\Main\UI\Extension::load([
                             </div>
 
 
-
                             <div
+                                    id="s-<?= $CurPost["ID"] ?>"
                                     class="idea-moderation__status"
                                     data-role="status"
                                     aria-live="polite"
                             ></div>
                         </div>
-                        <div class="idea-post-content"><?=$CurPost["TEXT_FORMATED"]?><?
+                        <div class="idea-post-content"><?= $CurPost["TEXT_FORMATED"] ?><?
 
 
-                            if ($CurPost["CUT"] == "Y")
-                            {
-                                ?><p><a class="blog-postmore-link" href="<?=$CurPost["urlToPost"]?>"><?=GetMessage("BLOG_BLOG_BLOG_MORE")?></a></p><?
+                            if ($CurPost["CUT"] == "Y") {
+                                ?><p><a class="blog-postmore-link"
+                                        href="<?= $CurPost["urlToPost"] ?>"><?= GetMessage("BLOG_BLOG_BLOG_MORE") ?></a>
+                                </p><?
                             }
-                            if($CurPost["POST_PROPERTIES"]["SHOW"] == "Y" && false)
-                            {
+                            if ($CurPost["POST_PROPERTIES"]["SHOW"] == "Y" && false) {
                                 ?><p><?
-                                foreach ($CurPost["POST_PROPERTIES"]["DATA"] as $arPostField)
-                                {
-                                    if(!empty($arPostField["VALUE"]))
-                                    {
-                                        ?><b><?=$arPostField["EDIT_FORM_LABEL"]?>:</b>&nbsp;<?$APPLICATION->IncludeComponent(
-                                            "bitrix:system.field.view",
-                                            $arPostField["USER_TYPE"]["USER_TYPE_ID"],
-                                            array("arUserField" => $arPostField), null, array("HIDE_ICONS"=>"Y"));
-                                        ?><br /><?
+                                foreach ($CurPost["POST_PROPERTIES"]["DATA"] as $arPostField) {
+                                    if (!empty($arPostField["VALUE"])) {
+                                        ?><b><?= $arPostField["EDIT_FORM_LABEL"] ?>
+                                        :</b>&nbsp;<? $APPLICATION->IncludeComponent(
+                                                "bitrix:system.field.view",
+                                                $arPostField["USER_TYPE"]["USER_TYPE_ID"],
+                                                array("arUserField" => $arPostField), null, array("HIDE_ICONS" => "Y"));
+                                        ?><br/><?
                                     }
                                 }
                                 ?></p><?
@@ -317,77 +327,84 @@ Bitrix\Main\UI\Extension::load([
 
                         if (!empty($CurPost["POST_PROPERTIES"]["DATA"][CBlogPost::UF_NAME])):
                             $eventHandlerID = false;
-                            $eventHandlerID = AddEventHandler("main", "system.field.view.file", Array("CBlogTools", "blogUFfileShow"));
+                            $eventHandlerID = AddEventHandler("main", "system.field.view.file", array("CBlogTools", "blogUFfileShow"));
                             $blogPostDoc = $CurPost["POST_PROPERTIES"]["DATA"][CBlogPost::UF_NAME];
                             if (!empty($blogPostDoc["VALUE"])): ?>
                                 <div class="blog-post-files">
-                                    <?$APPLICATION->IncludeComponent(
+                                    <? $APPLICATION->IncludeComponent(
                                             "bitrix:system.field.view",
                                             $blogPostDoc["USER_TYPE"]["USER_TYPE_ID"],
-                                            array("arUserField" => $blogPostDoc), null, array("HIDE_ICONS"=>"N"));?>
+                                            array("arUserField" => $blogPostDoc), null, array("HIDE_ICONS" => "N")); ?>
                                 </div>
                             <? endif;
                             if ($eventHandlerID !== false && (intval($eventHandlerID) > 0))
                                 RemoveEventHandler("main", "system.field.view.file", $eventHandlerID);
                         endif;
 
-                        if(!empty($CurPost["urlToHide"]) || !empty($CurPost["urlToShow"]) ||
+                        if (!empty($CurPost["urlToHide"]) || !empty($CurPost["urlToShow"]) ||
                                 !empty($CurPost["urlToEdit"]) || !empty($CurPost["urlToDelete"])):?>
                             <div class="idea-post-meta">
                                 <div class="idea-post-meta-util">
-                                    <?if($CurPost["urlToHide"] <> ''):?>
-                                        <a href="<?=$CurPost["urlToHide"]?>" onclick="if(confirm('<?=GetMessageJS("BLOG_MES_HIDE_POST_CONFIRM")?>')){this.href+='&sessid='+BX.bitrix_sessid(); return true;}return false;"><span class="idea-post-link-caption"><?=GetMessage("BLOG_MES_HIDE")?></span></a>
-                                    <?elseif($CurPost["urlToShow"] <> ''):?>
-                                        <a href="<?=$CurPost["urlToShow"]?>" onclick="if(confirm('<?=GetMessageJS("IDEA_MES_SHOW_POST_CONFIRM")?>')){this.href+='&sessid='+BX.bitrix_sessid(); return true;}return false;"><span class="idea-post-link-caption"><?=GetMessage("IDEA_MES_SHOW")?></span></a>
-                                    <?endif;?>
-                                    <?if($CurPost["urlToEdit"] <> ''):?>
-                                        <a href="<?=$CurPost["urlToEdit"]?>"><span class="idea-post-link-caption"><?=GetMessage("BLOG_MES_EDIT")?></span></a>
-                                    <?endif;?>
-                                    <?if($CurPost["urlToDelete"] <> ''):?>
-                                        <a href="<?=$CurPost["urlToDelete"]?>" onclick="if(confirm('<?=GetMessageJS("BLOG_MES_DELETE_POST_CONFIRM")?>')){this.href+='&sessid='+BX.bitrix_sessid(); return true;}return false;"><span class="idea-post-link-caption"><?=GetMessage("BLOG_MES_DELETE")?></span></a>
-                                    <?endif;?>
+                                    <? if ($CurPost["urlToHide"] <> ''):?>
+                                        <a href="<?= $CurPost["urlToHide"] ?>"
+                                           onclick="if(confirm('<?= GetMessageJS("BLOG_MES_HIDE_POST_CONFIRM") ?>')){this.href+='&sessid='+BX.bitrix_sessid(); return true;}return false;"><span
+                                                    class="idea-post-link-caption"><?= GetMessage("BLOG_MES_HIDE") ?></span></a>
+                                    <? elseif ($CurPost["urlToShow"] <> ''):?>
+                                        <a href="<?= $CurPost["urlToShow"] ?>"
+                                           onclick="if(confirm('<?= GetMessageJS("IDEA_MES_SHOW_POST_CONFIRM") ?>')){this.href+='&sessid='+BX.bitrix_sessid(); return true;}return false;"><span
+                                                    class="idea-post-link-caption"><?= GetMessage("IDEA_MES_SHOW") ?></span></a>
+                                    <?endif; ?>
+                                    <? if ($CurPost["urlToEdit"] <> ''):?>
+                                        <a href="<?= $CurPost["urlToEdit"] ?>"><span
+                                                    class="idea-post-link-caption"><?= GetMessage("BLOG_MES_EDIT") ?></span></a>
+                                    <?endif; ?>
+                                    <? if ($CurPost["urlToDelete"] <> ''):?>
+                                        <a href="<?= $CurPost["urlToDelete"] ?>"
+                                           onclick="if(confirm('<?= GetMessageJS("BLOG_MES_DELETE_POST_CONFIRM") ?>')){this.href+='&sessid='+BX.bitrix_sessid(); return true;}return false;"><span
+                                                    class="idea-post-link-caption"><?= GetMessage("BLOG_MES_DELETE") ?></span></a>
+                                    <?endif; ?>
                                 </div>
                                 <br clear="both"/>
                             </div>
-                        <?endif;?>
+                        <?endif; ?>
                     </div>
                 </div>
             </div>
             <div>
-                <?if($CurPost["IS_DUPLICATE"] !== false):?>
+                <? if ($CurPost["IS_DUPLICATE"] !== false):?>
                     <div class="blog-comments-duplicate">
                         <div class="blog-comment-line-duplicate"></div>
                         <div class="blog-comment-duplicate">
-                            <?=GetMessage("IDEA_POST_DUPLICATE", array("#LINK#" => $CurPost["IS_DUPLICATE"]))?>
+                            <?= GetMessage("IDEA_POST_DUPLICATE", array("#LINK#" => $CurPost["IS_DUPLICATE"])) ?>
                         </div>
                     </div>
-                <?endif;?>
-                <?$cntOfficial = 0;
-                if(!empty($CurPost["OFFICIAL_POST_ID"])):
-                    $arOfficialComments = array("ID"=>$CurPost["OFFICIAL_POST_ID"]);
-                    ?><?$cntOfficial = $APPLICATION->IncludeComponent(
+                <?endif; ?>
+                <? $cntOfficial = 0;
+                if (!empty($CurPost["OFFICIAL_POST_ID"])):
+                    $arOfficialComments = array("ID" => $CurPost["OFFICIAL_POST_ID"]);
+                    ?><? $cntOfficial = $APPLICATION->IncludeComponent(
                         "bitrix:idea.comment.list",
                         "official_list",
-                        Array(
+                        array(
                                 "RATING_TEMPLATE" => $arParams['RATING_TEMPLATE'],
                                 "FILTER" => $arOfficialComments,
-                                "BLOG_VAR"		=> $arParams["AR_RESULT"]["ALIASES"]["blog"],
-                                "USER_VAR"		=> $arParams["AR_RESULT"]["ALIASES"]["user_id"],
-                                "PAGE_VAR"		=> $arParams["AR_RESULT"]["ALIASES"]["page"],
-                                "POST_VAR"			=> $arParams["AR_RESULT"]["ALIASES"]["post_id"],
-                                "PATH_TO_BLOG"	=> $arParams["AR_RESULT"]["PATH_TO_BLOG"],
-                                "PATH_TO_POST"	=> $arParams["AR_RESULT"]["PATH_TO_POST"],
-                                "PATH_TO_USER"	=> $arParams["AR_RESULT"]["PATH_TO_USER"],
-                                "PATH_TO_SMILE"	=> $arParams["AR_RESULT"]["PATH_TO_SMILE"],
-                                "BLOG_URL"		=> $arParams["AR_RESULT"]["VARIABLES"]["blog"],
-                                "ID"			=> $CurPost["ID"],
-                                "CACHE_TYPE"	=> $arParams["AR_RESULT"]["CACHE_TYPE"],
-                                "CACHE_TIME"	=> $arParams["AR_RESULT"]["CACHE_TIME"],
+                                "BLOG_VAR" => $arParams["AR_RESULT"]["ALIASES"]["blog"],
+                                "USER_VAR" => $arParams["AR_RESULT"]["ALIASES"]["user_id"],
+                                "PAGE_VAR" => $arParams["AR_RESULT"]["ALIASES"]["page"],
+                                "POST_VAR" => $arParams["AR_RESULT"]["ALIASES"]["post_id"],
+                                "PATH_TO_BLOG" => $arParams["AR_RESULT"]["PATH_TO_BLOG"],
+                                "PATH_TO_POST" => $arParams["AR_RESULT"]["PATH_TO_POST"],
+                                "PATH_TO_USER" => $arParams["AR_RESULT"]["PATH_TO_USER"],
+                                "PATH_TO_SMILE" => $arParams["AR_RESULT"]["PATH_TO_SMILE"],
+                                "BLOG_URL" => $arParams["AR_RESULT"]["VARIABLES"]["blog"],
+                                "ID" => $CurPost["ID"],
+                                "CACHE_TYPE" => $arParams["AR_RESULT"]["CACHE_TYPE"],
+                                "CACHE_TIME" => $arParams["AR_RESULT"]["CACHE_TIME"],
                                 "COMMENTS_COUNT" => 1000, //unlimited by logic
-                                "DATE_TIME_FORMAT"	=> $arParams["AR_RESULT"]["DATE_TIME_FORMAT"],
-                                "USE_ASC_PAGING"	=> $arParams["AR_PARAMS"]["USE_ASC_PAGING"],
-                                "NOT_USE_COMMENT_TITLE"	=> $arParams["AR_PARAMS"]["NOT_USE_COMMENT_TITLE"],
-                                "GROUP_ID" 			=> $arParams["AR_PARAMS"]["GROUP_ID"],
+                                "DATE_TIME_FORMAT" => $arParams["AR_RESULT"]["DATE_TIME_FORMAT"],
+                                "USE_ASC_PAGING" => $arParams["AR_PARAMS"]["USE_ASC_PAGING"],
+                                "NOT_USE_COMMENT_TITLE" => $arParams["AR_PARAMS"]["NOT_USE_COMMENT_TITLE"],
+                                "GROUP_ID" => $arParams["AR_PARAMS"]["GROUP_ID"],
                                 "NAME_TEMPLATE" => $arParams["AR_PARAMS"]["NAME_TEMPLATE"],
                                 "SHOW_LOGIN" => $arParams["AR_PARAMS"]["SHOW_LOGIN"],
                                 "PATH_TO_CONPANY_DEPARTMENT" => $arParams["AR_PARAMS"]["PATH_TO_CONPANY_DEPARTMENT"],
@@ -410,56 +427,57 @@ Bitrix\Main\UI\Extension::load([
                         ),
                         $component,
                         array("HIDE_ICONS" => "Y")
-                );?><?
+                ); ?><?
                     $cntOfficial = intval($cntOfficial);
-                endif;?>
+                endif; ?>
                 <div class="tag-tl">
                     <div class="tag-tr">
                         <div class="tag-block">
                             <div class="tag-line">
 							<span class="main-tag-category"><?
-                                if($CurPost["IDEA_CATEGORY"]["NAME"]!==false)
-                                {
-                                    if($CurPost["IDEA_CATEGORY"]["LINK"]===false)
+                                if ($CurPost["IDEA_CATEGORY"]["NAME"] !== false) {
+                                    if ($CurPost["IDEA_CATEGORY"]["LINK"] === false)
                                         echo $CurPost["IDEA_CATEGORY"]["NAME"];
-                                    else
-                                    {
-                                        ?><a href="<?=$CurPost["IDEA_CATEGORY"]["LINK"];?>"><?=$CurPost["IDEA_CATEGORY"]["NAME"];?></a><?
+                                    else {
+                                        ?><a
+                                        href="<?= $CurPost["IDEA_CATEGORY"]["LINK"]; ?>"><?= $CurPost["IDEA_CATEGORY"]["NAME"]; ?></a><?
                                     }
-                                }?></span>
-                                <?if(!empty($CurPost["CATEGORY"]))
-                                {
+                                } ?></span>
+                                <? if (!empty($CurPost["CATEGORY"])) {
                                     $skipFirst = true;
                                     ?><span class="tag-marker"></span><?
-                                    foreach($CurPost["CATEGORY"] as $v)
-                                    {
+                                    foreach ($CurPost["CATEGORY"] as $v) {
                                         if (!$skipFirst) echo ', ';
-                                        ?><a href="<?=$v["urlToCategory"]?>" rel="nofollow"><?=$v["NAME"]?></a><?
+                                        ?><a href="<?= $v["urlToCategory"] ?>" rel="nofollow"><?= $v["NAME"] ?></a><?
                                         $skipFirst = false;
                                     }
                                 }
                                 ?>
                             </div>
-                            <span class="post-comment">(<a href="<?=$CurPost["urlToPost"]?>#comments"><?=GetMessage("IDEA_POST_COMMENT_CNT")?>: <?=(intval($CurPost["NUM_COMMENTS"]) - $cntOfficial);?></a>)</span>
-                            <br style="clear:both;" />
+                            <span class="post-comment">(<a
+                                        href="<?= $CurPost["urlToPost"] ?>#comments"><?= GetMessage("IDEA_POST_COMMENT_CNT") ?>: <?= (intval($CurPost["NUM_COMMENTS"]) - $cntOfficial); ?></a>)</span>
+                            <br style="clear:both;"/>
                         </div>
                     </div>
                 </div>
-                <div class="tag-tbl"><div class="tag-tbr"><div class="tag-tbb"></div></div></div>
+                <div class="tag-tbl">
+                    <div class="tag-tbr">
+                        <div class="tag-tbb"></div>
+                    </div>
+                </div>
             </div>
             <div class="bottom-space"></div>
             </div>
             <?
         }
-        ?><?=$arResult["NAV_STRING"];?>
+        ?><?= $arResult["NAV_STRING"]; ?>
 
         <?
-    }
-    elseif(!empty($arResult["BLOG"]))
-    {
-        ?><div class="blog-post-current">
+    } elseif (!empty($arResult["BLOG"])) {
+        ?>
+        <div class="blog-post-current">
         <div class="blog-errors blog-note-box blog-textinfo">
-            <div class="blog-error-text"><?=GetMessage("BLOG_BLOG_BLOG_NO_AVAIBLE_MES");?></div>
+            <div class="blog-error-text"><?= GetMessage("BLOG_BLOG_BLOG_NO_AVAIBLE_MES"); ?></div>
         </div>
         </div><?
     }
@@ -527,8 +545,10 @@ Bitrix\Main\UI\Extension::load([
                     );
                 }
 
-                function showStatus(message, type) {
-                    statusContainer.textContent = message || '';
+                function showStatus(message, type,obj={},postId='') {
+                    //statusContainer.textContent = message || '';
+
+                   $('#s-'+postId).html(buildTaskLinks(obj));
                     statusContainer.classList.remove(
                         'idea-moderation__status--success',
                         'idea-moderation__status--error'
@@ -551,6 +571,11 @@ Bitrix\Main\UI\Extension::load([
                     createButton.disabled =
                         requestInProgress || selectedUsers.size === 0;
                 }
+               // function updateSelectButton() {
+                    if (selectButton) {
+                        selectButton.disabled = false;
+                    }
+               // }
 
                 function renderSelectedUsers() {
                     usersContainer.replaceChildren();
@@ -639,9 +664,18 @@ Bitrix\Main\UI\Extension::load([
                     return dialog;
                 }
 
+                function buildTaskLinks(obj) {
+                    return 'Создана(ы) задача(и): <br>'+Object.values(obj)
+                        .map(function (postId) {
+                            return '<a class="task-success-link" href="/company/personal/user/911/tasks/task/view/' + postId + '/">Задача №' + postId + '</a><br>';
+                        })
+                        .join(' ');
+                }
+
                 selectButton.addEventListener('click', function () {
                     clearStatus();
                     getDialog().show();
+                    selectButton.disabled=true;
                 });
 
                 usersContainer.addEventListener('click', function (event) {
@@ -681,7 +715,7 @@ Bitrix\Main\UI\Extension::load([
                     if (requestInProgress || selectedUsers.size === 0) {
                         return;
                     }
-                    const author=$(this).data('author');
+                    const author = $(this).data('author');
 
                     const moderatorIds = Array.from(
                         selectedUsers.values()
@@ -721,12 +755,16 @@ Bitrix\Main\UI\Extension::load([
                             }
 
                             const createdCount = response.createdCount || 0;
+                            const taskIds = response.taskIds || 0;
+                           // response.taskIds
+
                             const failedCount = response.failedCount || 0;
+
 
                             if (failedCount > 0) {
                                 showStatus(
-                                    'Создано задач: ' +
-                                    createdCount +
+                                    'Создано задач: /company/personal/user/<?= $currUserId;?>/tasks/task/view/' +
+                                    postId +
                                     '. Не создано: ' +
                                     failedCount +
                                     '.',
@@ -734,11 +772,13 @@ Bitrix\Main\UI\Extension::load([
                                 );
                             } else {
                                 showStatus(
-                                    'Задачи успешно созданы: ' +
-                                    createdCount +
-                                    '.',
-                                    'success'
+                                    ' <a href="/company/personal/user/<?= $currUserId;?>/tasks/task/view/' + postId + '">Задача №' + postId + '</a>',
+                                    'success',
+                                    taskIds,
+                                    postId
                                 );
+                                $('#c-'+postId).attr('disabled', true);
+
                             }
 
                             /*

@@ -21,10 +21,6 @@
         color: #0b1e33;
     }
 
-    .form-step {
-        transition: opacity 0.15s ease;
-    }
-
     .field-row {
         margin: 18px 0 12px;
     }

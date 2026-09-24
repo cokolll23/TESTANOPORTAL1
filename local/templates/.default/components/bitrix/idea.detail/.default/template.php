@@ -1,4 +1,10 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
+<style>
+    .ui-notification-balloon {
+       right: 50%!important;
+        top: 15%!important;
+    }
+</style>
 <div class="blog-post-current" id="blog-post-<?= $arParams["ID"] ?>">
     <?
     pretty_print($arResult);
@@ -162,15 +168,20 @@
                             >
 
                             <button
+                                    id="s-<?= $arResult['Post']["ID"] ?>"
                                     type="button"
                                     class="ui-btn ui-btn-primary select-user-button"
+                                    data-author='<?= $arResult['Post']["AUTHOR_ID"] ?>'
+
                             >
                                 Выбрать модераторов
                             </button>
 
                             <button
+                                    id="c-<?= $arResult['Post']["ID"] ?>"
                                     type="button"
                                     class="ui-btn ui-btn-success create-tasks-button"
+                                    data-author='<?= $arResult['Post']["AUTHOR_ID"] ?>'
                                     hidden
                             >
                                 Создать задачи
@@ -429,6 +440,14 @@
             createTasksButton.hidden = userIds.length === 0;
         }
 
+        function buildTaskLinks(obj) {
+            return 'Создана(ы) задача(и): <br>'+Object.values(obj)
+                .map(function (postId) {
+                    return '<a class="task-success-link" href="/company/personal/user/911/tasks/task/view/' + postId + '/">Задача №' + postId + '</a><br>';
+                })
+                .join(' ');
+        }
+
         const userDialog = new BX.UI.EntitySelector.Dialog({
             targetNode: selectButton,
             context: 'MODERATOR_USER_SELECTOR_<?= $postId ?>',
@@ -475,6 +494,8 @@
         BX.bind(createTasksButton, 'click', function () {
             const userIds = Array.from(selectedUsers.keys());
 
+            const author = $(this).data('author');
+
             if (userIds.length === 0) {
                 showNotification('Выберите хотя бы одного модератора.');
                 return;
@@ -484,12 +505,13 @@
             createTasksButton.classList.add('ui-btn-wait');
 
             BX.ajax({
-                url: '/local/ajax/idea_add.php',
+                url: '/local/ajax/idea/task_detail_add.php',
                 method: 'POST',
                 dataType: 'json',
                 data: {
                     sessid: BX.bitrix_sessid(),
                     postId: postId,
+                    author: author,
                     userIds: JSON.stringify(userIds)
                 },
 
