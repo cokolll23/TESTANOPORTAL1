@@ -6,6 +6,8 @@ use Bitrix\Main\Loader;
 use Bitrix\Iblock\PropertyTable;
 use Bitrix\Iblock\IblockTable;
 use Lab\Helpers\IblockHelpers;
+use Bitrix\Main\Mail\Event as MailEvent;
+use Bitrix\Sale\Order;
 
 class SotrudnikiUpdateHandler
 {
@@ -14,6 +16,8 @@ class SotrudnikiUpdateHandler
 
     // Символьный код инфоблока (если ID может меняться)
     const IBLOCK_CODE = 'sotrudniki';
+
+    const SHOP_ACCEPTED_STATUS_ID = 'N';
 
     // Массив для хранения старых значений
     private static $oldValues = [];
@@ -29,7 +33,7 @@ class SotrudnikiUpdateHandler
     {
         $iblock_id = IblockHelpers::getIblockIdByCode('sotrudniki');
         // Проверяем, что обновляется нужный инфоблок
-        if ($arFields['IBLOCK_ID'] !=  $iblock_id) {
+        if ($arFields['IBLOCK_ID'] != $iblock_id) {
             return;
         }
 
@@ -42,7 +46,6 @@ class SotrudnikiUpdateHandler
         if (!\CModule::IncludeModule('iblock')) {
             return;
         }
-
 
 
         // Получаем текущие (старые) значения свойств из БД
@@ -159,7 +162,6 @@ class SotrudnikiUpdateHandler
                 $log1 = date('Y-m-d H:i:s') . ' OnAfterIBlockElementUpdateHandler ' . print_r($arBoolMore, true);
                 $log = date('Y-m-d H:i:s') . PHP_EOL . PHP_EOL . ' Вам начислено в Магазине бонусов баллы : ' . PHP_EOL . PHP_EOL . $message;
                 file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/logDiff.txt', $log . PHP_EOL, FILE_APPEND);
-
                 mail($email, $subject, $log);
             }
         }

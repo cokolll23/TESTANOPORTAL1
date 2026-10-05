@@ -258,6 +258,13 @@ class IblockEventsHandlers
         $server = \Bitrix\Main\Context::getCurrent()->getServer();
         $domain = $server->getServerName();
 
+        if ($IBLOCK_CODE === 'sotrudniki') { // при добавлении баллов сотруднику
+
+            $log = date('Y-m-d H:i:s') . ' баллы сотруднику ' . print_r($arFields, true);
+            file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/logBally.txt', $log . PHP_EOL, FILE_APPEND);
+            //\Bitrix\Main\Diag\Debug::dumpToFile($log, '$event onStatusChange' . date('d-m-Y; H:i:s'));
+            }
+
         if ($IBLOCK_CODE === 'interlabs.feedbackform') { // Из формы Написать администратору
 
             $to = $adminEmail = 'cavjob@ya.ru,sobolevaya3@mos.ru';
