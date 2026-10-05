@@ -174,6 +174,10 @@ try {
         )
     );
 
+    $ideaName = cleanText(
+        $_POST['idea_Name'] ?? ''
+    );
+
     $ideaDescription = cleanText(
         $_POST['idea_description'] ?? ''
     );
@@ -492,21 +496,10 @@ HTML;
      * Так как отдельного поля названия в форме нет,
      * заголовок строится из начала описания идеи.
      */
-    $title = preg_replace(
-        '/\s+/u',
-        ' ',
-        $ideaDescription
-    );
 
-    $title = trim((string)$title);
 
-    if (mb_strlen($title) > 120) {
-        $title = rtrim(mb_substr($title, 0, 117))
-            . '...';
-    }
-
-    if ($title === '') {
-        $title = 'Новая идея';
+    if ($_POST['idea_name'] != '') {
+        $title = $_POST['idea_name'];
     }
 
     $postFields = [

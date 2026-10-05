@@ -1177,10 +1177,20 @@ elseif($arResult["UTIL_MESSAGE"] <> '')
         novalidate
 >
     <?= bitrix_sessid_post() ?>
-
+    <!-- ШАГ 1 -->
     <div class="form-step" data-step="1">
         <h3>Шаг 1: Кому поможет идея?</h3>
         <p>Выберите один или несколько вариантов.</p>
+
+        <div class="field-row">
+            <label for="idea_name" class="visually-hidden">
+                Название идеи
+            </label>
+
+            <input name="idea_name" id="idea_name" required placeholder="Название идеи обязательно">
+
+        </div>
+
         <fieldset class="checkbox-group" data-required-group="audience">
             <legend class="visually-hidden">Кому поможет идея</legend>
 
@@ -1246,6 +1256,7 @@ elseif($arResult["UTIL_MESSAGE"] <> '')
         </fieldset>
 
         <div class="form-error" data-error="audience" aria-live="polite"></div>
+        <div class="form-error" data-error="idea_name" aria-live="polite"></div>
 
         <button type="button" class="next-step">Далее →</button>
     </div>
@@ -1254,7 +1265,29 @@ elseif($arResult["UTIL_MESSAGE"] <> '')
     <div class="form-step" data-step="2" style="display:none;">
         <h3>Шаг 2: В чем идея?</h3>
         <p>Опишите, что вы предлагаете изменить, улучшить или создать.</p>
+        <?php
+        $APPLICATION->IncludeComponent(
+                "bitrix:main.post.form",
+                "",
+                [
+                        "FORM_ID" => "msFormSubmit", // ID формы
+                        "SHOW_MORE" => "Y", // Показать дополнительные настройки
+                        //"PARSER" => ["Bold", "Italic", "Underline", "Strike", "ForeColor", "FontList", "FontSizeList", "RemoveFormat", "Quote", "Code", "InsertCut", "CreateLink", "Image", "Table", "Justify", "InsertOrderedList", "InsertUnorderedList", "SmileList", "Source", "UploadImage", "InputVideo", "MentionUser"], // Кнопки панели форматирования
+                        "PARSER" => [ // настройки панели форматирования
+                                "Bold", "Italic", "Underline", "Strike",
+                                "ForeColor", "FontList", "FontSizeList",
+                                "RemoveFormat", "Quote", "Code",
+                                "InsertCut", "CreateLink", "Image",
+                                "Table", "Justify", "InsertOrderedList",
+                                "InsertUnorderedList", "SmileList", "Source",
+                                "UploadImage", "InputVideo", "MentionUser"
+                        ],
 
+                        "BUTTONS" => ["UploadImage", "UploadFile", "CreateLink", "InputVideo", "Quote"],
+                        "UPLOAD_FILE" => ["INPUT_NAME" => "FILES", "INPUT_VALUE" => "!empty($FILES)"] // настройка загрузки файлов// Дополнительные кнопки
+                ]
+        );
+        ?>
         <div class="field-row">
             <label for="idea_description" class="visually-hidden">
                 Описание идеи
@@ -1508,6 +1541,17 @@ elseif($arResult["UTIL_MESSAGE"] <> '')
             let valid = true;
 
             if (stepNumber === 1) {
+                const ideaName = step.querySelector('[name="idea_name"]');
+
+                if (!ideaName.value.trim()) {
+                    setError(
+                        'idea_name',
+                        'Название идеи обязательно.'
+                    );
+                    ideaName.focus();
+                    valid = false;
+                }
+
                 const checkedAudience = step.querySelectorAll(
                     'input[name="audience[]"]:checked'
                 );
@@ -1839,6 +1883,7 @@ elseif($arResult["UTIL_MESSAGE"] <> '')
         showStep(0);
     });
 </script>
+
 
 <div class="blog-post-edit">
 <?

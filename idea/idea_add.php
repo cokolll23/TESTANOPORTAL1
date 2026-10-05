@@ -500,16 +500,17 @@ HTML;
 
     $title = trim((string)$title);
 
-    if (mb_strlen($title) > 120) {
+   /* if (mb_strlen($title) > 120) {
         $title = rtrim(mb_substr($title, 0, 117))
             . '...';
-    }
+    }*/
 
-    if ($title === '') {
-        $title = 'Новая идея';
+    if ($_POST['idea_name'] != '') {
+        $title = $_POST['idea_name'];
     }
 
     $postFields = [
+
         'TITLE' => $title,
         'DETAIL_TEXT' => $detailText,
         'DETAIL_TEXT_TYPE' => 'text',

@@ -2,6 +2,9 @@
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Users Json");
 ?>
+<style>
+    .copy-item{cursor: pointer;}
+</style>
 <?php
 
 // Функция для обработки JSON файла и поиска пользователей
@@ -160,12 +163,12 @@ function displayResults($results) {
 
     if (!empty($results['users_without_xml_id'])) {
         echo "=== СПИСОК ПОЛЬЗОВАТЕЛЕЙ БЕЗ XML_ID ===\n";
-        echo "<br>";
+        echo "<br>";echo "<br>";
         foreach ($results['users_without_xml_id'] as $index => $user) {
-            echo ($index + 1) . ". ID: " . $user['bx_id'] .
-                " <br> Email: " . $user['email'] .
-                " <br>ФИО: " . $user['фио'] .
-                " <br> JSON XML_ID: <b>" . $user['json_xml_id'] . "</b>\n";
+            echo '<b style="font-size: 150% ">'.($index + 1). '</b>    '. ". ID: <p class='copy-item'>" . $user['bx_id'] .
+                "</p> <br> <b style='/*font-size: 150%*/ '>Email:<br> <p class='copy-item'>" . $user['email'] ."<p>".
+                " <br><p>ФИО:</p> <p  class='copy-item'>" . $user['фио'] .
+                " </p><br> JSON XML_ID: <b> <p class='copy-item'>" . $user['json_xml_id'] . "</p></b>\n";
             echo "<br>";
             echo "<br>";
             echo "<br>";
@@ -215,6 +218,14 @@ function updateUserXmlIds($matchedUsers) {
 // updateUserXmlIds($results['details']['matched_users_list']);
 
 ?>
-
+<script>
+    document.querySelectorAll('.copy-item').forEach(item => {
+        item.addEventListener('click', function() {
+            // Копируем именно видимый текст внутри элемента
+            const text = this.textContent.trim();
+            navigator.clipboard.writeText(text);
+        });
+    });
+</script>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
