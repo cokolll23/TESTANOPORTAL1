@@ -58,10 +58,10 @@ while ($f = $rs->Fetch()) {
     $arResult['ABSENCE_TYPES'][$f['XML_ID']] = $f['ID'];
     $arResult['ABSENCE_TYPES'][$f['ID']] = $f['XML_ID'];
 
-    if (in_array($f['XML_ID'], ['VACATION', 'LEAVEUNPAYED'])) {
+    if (in_array($f['XML_ID'], ['VACATION', 'LEAVEUNPAYED', 'ASSIGNMENT', 'TIMEOFF'])) {
         $arResult['VAC_TYPES'][] = [
             'id' => $f['ID'],
-            'name' => $f['VALUE'],
+            'name' => $f['VALUE']
         ];
     }
 }
