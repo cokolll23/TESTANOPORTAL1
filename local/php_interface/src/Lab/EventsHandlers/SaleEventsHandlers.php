@@ -132,7 +132,6 @@ class SaleEventsHandlers
             $strAction='выполнен';
             $orderLink = '';
         }
-
         $message = <<<HTML
 
 Письмо от {$subject} 
