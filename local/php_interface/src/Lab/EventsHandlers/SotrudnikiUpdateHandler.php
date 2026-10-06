@@ -156,9 +156,9 @@ class SotrudnikiUpdateHandler
              $headers .= "MIME-Version: 1.0\r\n";*/
             if (!empty($arBoolMore)) {
 
-                //$email = $arFields['CODE'];
-                $email = 'cavjob@ya.ru';
-                $subject = 'Уведомление об изменении показателя';
+                $email = $arFields['CODE'];
+                //$email = 'cavjob@ya.ru';
+                $subject = 'Уведомление о начислении баллов ';
                 $log1 = date('Y-m-d H:i:s') . ' OnAfterIBlockElementUpdateHandler ' . print_r($arBoolMore, true);
                 $log = date('Y-m-d H:i:s') . PHP_EOL . PHP_EOL . ' Вам начислено в Магазине бонусов баллы : ' . PHP_EOL . PHP_EOL . $message;
                 file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/logDiff.txt', $log . PHP_EOL, FILE_APPEND);

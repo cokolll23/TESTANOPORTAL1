@@ -102,7 +102,7 @@ class SaleEventsHandlers
         $order = $event->getParameter("ENTITY");
         $STATUS_ID = $order->getField("STATUS_ID");// N- Принят F- Выполнен
 
-        if ($STATUS_ID == 'N' || $STATUS_ID == 'N') {
+        if ($STATUS_ID == 'N' || $STATUS_ID == 'F') {
 
             // добавление заказа и емеил  покупателю
             $orderId = $order->getId();
@@ -139,11 +139,10 @@ class SaleEventsHandlers
             }
             $message = <<<HTML
 
-Письмо от {$subject} 
+Письмо из магазина бонусов
 Здравствуйте, {$buyer['NAME']} 
 Ваш заказ № {$buyer['$orderId']}  {$strAction}.
 Сумма заказа: {$buyer['$price']} 
-
 Спасибо за покупку!
 
 HTML;
