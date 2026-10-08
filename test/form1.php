@@ -907,7 +907,7 @@ $renderTree = function (array $nodes) use (&$renderTree, $e, $selectedDepartment
             const formData = new FormData(form);
 
             try {
-                const response = await fetch('/local/ajax/otpusks/otpuskForm.php', {
+                const response = await fetch('/local/ajax/otpuskForm.php', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin',
