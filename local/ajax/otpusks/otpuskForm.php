@@ -59,6 +59,7 @@ $getPostString = static function ($value): string {
 };
 
 $fio = $getPostString($_POST['FIO'] ?? '');
+$fio_id = $getPostString($_POST['FIO_ID'] ?? '');
 $email = $getPostString($_POST['EMAIL'] ?? '');
 $dateFrom = $getPostString($_POST['DATE_FROM'] ?? '');
 $dateTo = $getPostString($_POST['DATE_TO'] ?? '');
@@ -197,7 +198,7 @@ if ((int)$headId > 0) {
 $planIblock = CIBlock::GetList(
     [],
     [
-        '=CODE' => 'otpusks_plan',
+        '=CODE' => 'otpuskss_plan',
         'ACTIVE' => 'Y',
     ]
 )->Fetch();
@@ -205,7 +206,7 @@ $planIblock = CIBlock::GetList(
 $planIblockId = (int)($planIblock['ID'] ?? 0);
 
 if (!$planIblockId) {
-    jsonResponse(false, 'Инфоблок otpusks_plan не найден.', [], 500);
+    jsonResponse(false, 'Инфоблок otpuskss_plan не найден.', [], 500);
 }
 
 $dateFromObject = DateTime::createFromFormat('!Y-m-d', $dateFrom);
@@ -230,13 +231,13 @@ $elementFields = [
      * инфоблока otpusks_plan.
      */
     'PROPERTY_VALUES' => [
-        'FIO' => $fio,
+        'FIO' => $fio_id,
         'EMAIL' => $email,
         'DATE_FROM' => $bitrixDateFrom,
         'DATE_TO' => $bitrixDateTo,
         'DEPARTMENT' => $departmentId,
         'DEPARTMENT_NAME' => $department['NAME'],
-        'DEPARTMENT_HEAD' => $managerName,
+        'DEPARTMENT_HEAD' => $headId,
     ],
 ];
 

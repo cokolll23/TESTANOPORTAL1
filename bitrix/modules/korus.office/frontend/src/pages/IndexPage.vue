@@ -66,6 +66,7 @@ const rightColumn = computed(() => {
       </div>
     </template>
   </q-page>
+
 </template>
 
 <style lang="scss">

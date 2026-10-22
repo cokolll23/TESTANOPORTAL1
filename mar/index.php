@@ -5,6 +5,8 @@ use Bitrix\Main\Config\Option;
 use Bitrix\Main\Loader;
 use Bitrix\Main\UI\Extension;
 use Bitrix\Iblock\IblockTable;
+use Bitrix\Main\UserTable;
+
 
 ?>
 
@@ -284,7 +286,6 @@ use Bitrix\Iblock\IblockTable;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
     }
 
     .modal-title {
@@ -596,8 +597,6 @@ use Bitrix\Iblock\IblockTable;
     }
 
 </style>
-
-
 <!-- SVG спрайт иконок -->
 <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
     <!-- Красная 3D-звезда -->
@@ -656,6 +655,25 @@ use Bitrix\Iblock\IblockTable;
 
             if (!empty($userData['UF_MARATHON'])) {
                 $starsCount = (int)$userData['UF_MARATHON'];
+            }
+            $user = UserTable::getList([
+                    'select' => ['ID', 'UF_EXCLUDE'],
+                    'filter' => ['=ID' => $userId]
+            ])->fetch();
+
+            if ($user && !empty($user['UF_EXCLUDE'])) {
+                // Значение также будет массивом
+                $user = UserTable::getList([
+                        'select' => ['ID', 'UF_EXCLUDE'],
+                        'filter' => ['=ID' => $userId]
+                ])->fetch();
+
+                if ($user && !empty($user['UF_EXCLUDE'])) {
+                    // Значение также будет массивом
+                    $arUsersExclude = $user['UF_EXCLUDE'];
+                   // print_r($user['UF_EXCLUDE']);
+                }
+
             }
         }
 
@@ -721,6 +739,10 @@ use Bitrix\Iblock\IblockTable;
                     width: 26px;
                     height: 26px;
                 }
+
+                .btn-send.disabled {
+                    background-color: #6b6868;
+                }
             </style>
 
             <div class="stars-action-row">
@@ -732,7 +754,8 @@ use Bitrix\Iblock\IblockTable;
                     <?php endfor; ?>
                 </div>
 
-                <button class="btn-send" id="open-gift-btn">
+                <? $blButton = $starsCount == 0 ? 'disabled' : ''; ?>
+                <button <?= $blButton; ?> class="btn-send <?= $blButton; ?>" id="open-gift-btn">
                     <svg width="15" height="15" viewBox="0 0 24 24">
                         <use href="#icon-send"></use>
                     </svg>
@@ -805,6 +828,7 @@ use Bitrix\Iblock\IblockTable;
         }
 
         $currentUserId = (int)$USER->GetID();
+
 
         /*
          * Находим инфоблок по символьному коду.
@@ -1375,13 +1399,13 @@ use Bitrix\Iblock\IblockTable;
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
+
         </div>
+        <div style="color: #FF1E2D; font-weight: bold; font-size: 14px; margin-bottom: 10px;" id="error-message" class="selected-employees_information"></div>
 
         <div class="form-group">
             <label class="form-label" for="user-search">Кому</label>
-            <? // require $_SERVER['DOCUMENT_ROOT'] . '/mar/index1222.php'; ?>
 
-            <? // require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php'); ?>
             <style>
                 .selected-employees__row {
                     align-items: flex-start;
@@ -1485,8 +1509,6 @@ use Bitrix\Iblock\IblockTable;
                 }
             </style>
             <?php
-
-
             global $USER;
 
             if ($USER->IsAuthorized()) {
@@ -1532,7 +1554,7 @@ use Bitrix\Iblock\IblockTable;
                             );
 
                             if ($arSection = $rsSection->Fetch()) {
-                                echo $departmentName = $arSection['NAME'];
+                                //echo $departmentName = $arSection['NAME'];
                                 $departmentID = $arSection['ID'];
                             }
                         }
@@ -1968,6 +1990,17 @@ use Bitrix\Iblock\IblockTable;
         const employeeItems = <?= $itemsJson ?>;
         const selectedContainer = document.getElementById('selected-employees');
 
+        $('body').on('click', '.ui-selector-item-box', function (e) {
+
+            setTimeout(sel, 1000)
+
+        });
+
+        function sel() {
+            const _thisId = $('.selected-employees__row').data('user-id');
+            console.log(_thisId);
+        }
+
         // Справочник: ID сотрудника → его данные.
         const employeesById = new Map(
             employeeItems.map(function (item) {
@@ -1975,6 +2008,9 @@ use Bitrix\Iblock\IblockTable;
             })
         );
 
+        var $arExcludedUsers = []; //Ids
+
+        //console.log(arrAr);
         const selector = new BX.UI.EntitySelector.TagSelector({
             id: 'employees-by-department',
             multiple: false,
@@ -1982,6 +2018,45 @@ use Bitrix\Iblock\IblockTable;
             events: {
                 onAfterTagAdd: function () {
                     renderSelectedEmployees();
+                },
+                // Событие срабатывает перед добавлением тега (выбором из списка)
+                onBeforeTagAdd: function (event) {
+                    $('.selected-employees_information').text('');
+
+                    // Получаем сам виджет (селектор)
+                    const selector = event.getTarget();
+
+                    // Получаем данные выбранного элемента (тега)
+                    const {tag} = event.getData();
+
+                    // Теперь у вас есть доступ к информации о сотруднике
+                    // Например, можно получить ID и имя:
+                    const userId = tag.getId();       // ID пользователя
+                    const userName = tag.getTitle();  // Имя / ФИО
+
+
+                    const arrAr = <?= json_encode($arUsersExclude) ?>;
+
+                   /* if (arrAr.includes(userId)) {
+                        alert(userId+' есть в массиве');
+
+                    }*/
+                    if (arrAr.some(x => Number(x) === userId)) {
+                        alert(userName+' вы уже отправили звезду, выберите другого');
+
+                        setTimeout(function() {
+                            $('#selected-employees').find('button.selected-employees__remove').each(function() {
+                                $(this).click();
+                                $('.selected-employees_information').text(userName+' вы уже отправили звезду, выберите другого');
+                            });
+                        }, 200);
+                    }
+
+
+
+
+                    // Здесь можно выполнить свои действия, например, отправить AJAX запрос
+                    // или обновить другое поле на странице.
                 },
 
                 onAfterTagRemove: function () {
@@ -2004,7 +2079,13 @@ use Bitrix\Iblock\IblockTable;
                     {
                         id: 'department-employee',
                         dynamicLoad: false,
-                        dynamicSearch: false
+                        dynamicSearch: false,
+                        options: {
+                            id: 'user',
+                            // Массив ID пользователей, которых нужно скрыть
+                            excludedIds: [590, 190]
+                        }
+
                     }
                 ],
 
@@ -2018,6 +2099,16 @@ use Bitrix\Iblock\IblockTable;
                 items: employeeItems
             }
         });
+
+        /* const dialog = selector.getDialog();
+
+         // Устанавливаем новые опции для сущности user
+         dialog.getEntity('user').setOptions({
+             excludeUsers: [590]
+         });
+
+ // Сбрасываем кэш загруженных элементов и перезагружаем вкладки
+         dialog.clearCache();*/
 
         // ID сотрудника → введённый комментарий.
 // Сохраняет текст при перерисовке списка.
@@ -2039,6 +2130,7 @@ use Bitrix\Iblock\IblockTable;
             }
 
             const fragment = document.createDocumentFragment();
+
 
             tags.forEach(function (tag) {
                 const userId = String(tag.getId());

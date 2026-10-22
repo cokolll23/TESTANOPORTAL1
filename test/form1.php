@@ -349,8 +349,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $selectedDepartment = $sectionsById[$selectedDepartmentId] ?? null;
 $selectedDepartmentName = $selectedDepartment['NAME'] ?? '';
+$selectedDepartmentId = $selectedDepartment['ID'] ?? '';
 $selectedManagerName = $selectedDepartment['MANAGER_NAME'] ?? '';
-
+$selectedManagerId = $selectedDepartment['HEAD_ID'] ?? '';
+pretty_print($selectedDepartment);
 /**
  * Рекурсивный вывод дерева разделов
  */
@@ -644,6 +646,15 @@ $renderTree = function (array $nodes) use (&$renderTree, $e, $selectedDepartment
                                     placeholder="Введите ФИО"
                                     required
                             >
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="fio_id"
+                                    name="FIO_ID"
+                                    value="<?= $currentUserId ?>"
+                                    placeholder="Введите ФИО"
+                                    required
+                            >
                         </div>
 
                         <div class="col-md-6">
@@ -744,6 +755,14 @@ $renderTree = function (array $nodes) use (&$renderTree, $e, $selectedDepartment
                                     value="<?= $e($selectedDepartmentName) ?>"
                                     readonly
                             >
+                            <input
+                                    type="text"
+                                    class="form-control readonly-control"
+                                    id="departmentId"
+                                    name="DEPARTMENT_ID"
+                                    value="<?= $e($selectedDepartmentId) ?>"
+                                    readonly
+                            >
                         </div>
 
                         <div class="col-md-6">
@@ -760,7 +779,18 @@ $renderTree = function (array $nodes) use (&$renderTree, $e, $selectedDepartment
                                     placeholder="Руководитель не указан"
                                     readonly
                             >
+                            <input
+                                    type="text"
+                                    class="form-control readonly-control"
+                                    id="departmentHeadId"
+                                    name="DEPARTMENT_HEAD_ID"
+                                    value="<?= $e($selectedManagerId) ?>"
+                                    placeholder="Руководитель не указан"
+                                    readonly
+                            >
+
                         </div>
+
 
                         <div class="col-12 pt-2">
                             <button
@@ -905,9 +935,9 @@ $renderTree = function (array $nodes) use (&$renderTree, $e, $selectedDepartment
             submitButton.textContent = 'Отправка...';
 
             const formData = new FormData(form);
-
+            console.log(formData)
             try {
-                const response = await fetch('/local/ajax/otpuskForm.php', {
+                const response = await fetch('/local/ajax/otpusks/otpuskForm.php', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin',

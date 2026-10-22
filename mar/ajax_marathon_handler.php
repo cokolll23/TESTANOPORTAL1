@@ -82,13 +82,13 @@ $elementName = 'Звезда от: ' . $userLastName;
 $el = new CIBlockElement();
 
 $arFields = [
-    'IBLOCK_ID'       => $iblockId,
-    'NAME'            => $elementName,
-    'ACTIVE'          => 'Y',
-    'PREVIEW_TEXT'    => $comment,
+    'IBLOCK_ID' => $iblockId,
+    'NAME' => $elementName,
+    'ACTIVE' => 'Y',
+    'PREVIEW_TEXT' => $comment,
     'PREVIEW_TEXT_TYPE' => 'text',
     'PROPERTY_VALUES' => [
-        'who_send_user'   => $currentUserId,
+        'who_send_user' => $currentUserId,
         'whome_send_user' => $targetUserId,
     ],
 ];
@@ -113,18 +113,38 @@ if ($newElementId = $el->Add($arFields)) {
 
         // Обновляем поле
         $user = new CUser;
-        $fields = ['UF_MARATHON' => $newValue];
-        $user->Update($userId, $fields);
+
+
+// 1. Получаем текущие данные пользователя
+$currentUser = CUser::GetByID($userId)->Fetch();
+
+// 2. Берем текущее значение UF_EXCLUDE (если пусто, то пустой массив)
+$excludeList = $currentUser['UF_EXCLUDE'] ?? [];
+if (!is_array($excludeList)) {
+    $excludeList = [$excludeList];
+}
+
+// 3. Добавляем новое значение, если его еще нет
+if (!in_array($targetUserId, $excludeList)) {
+    $excludeList[] = $targetUserId;
+}
+
+// 4. Сохраняем
+$fields = [
+    'UF_MARATHON' => $newValue,
+    'UF_EXCLUDE' => $excludeList
+];
+$user->Update($userId, $fields);
     }
 
     echo json_encode([
-        'status'     => 'success',
-        'message'    => 'Звезда добавлена',
+        'status' => 'success',
+        'message' => 'Звезда добавлена',
         'element_id' => $newElementId
     ]);
 } else {
     echo json_encode([
-        'status'  => 'error',
+        'status' => 'error',
         'message' => 'Ошибка при сохранении: ' . $el->LAST_ERROR
     ]);
 }
