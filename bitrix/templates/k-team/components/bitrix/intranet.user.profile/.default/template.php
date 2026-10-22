@@ -98,6 +98,7 @@ if (
 
 <div class="intranet-user-profile" id="intranet-user-profile-wrap">
     <div class="intranet-user-profile-column-left">
+       <!-- фото ["User"]["STATUS"]-->
         <div class="intranet-user-profile-column-block">
             <div class="intranet-user-profile-rank">
                 <? if (
@@ -202,13 +203,13 @@ if (
             ?>
         </div>
         <?
-
         if (
                 $arResult["StressLevel"]['AVAILABLE'] == 'Y'
                 && !in_array($arResult["User"]["STATUS"], ['email', 'extranet'])
                 && !$arResult["isExtranetSite"]
         ) {
             ?>
+            <!-- стресс-->
             <div class="intranet-user-profile-column-block intranet-user-profile-column-block-inline"
                  id="intranet-user-profile-stresslevel-noresult" style="display: none;">
                 <div id="intranet-user-profile-stresslevel-noresult-widget"
@@ -263,14 +264,29 @@ if (
             <?
         }
         ?>
+        <!-- Организационная структура-->
         <div class="intranet-user-profile-column-block">
-            <div class="intranet-user-profile-column-block-title">
+            <h2 class="intranet-user-profile-column-block-title">
                         <span class="intranet-user-profile-column-block-title-text">
                             <?= Loc::getMessage('INTRANET_USER_PROFILE_DEPARTMENT_TITLE') ?>
                         </span>
-            </div>
+            </h2>
             <div class="department-chain">
                 <?= $arResult['DEPARTMENT_CHAIN'] ?>
+            </div>
+
+            <div class="breadcrumbs">
+                <ul>
+                    <li class="parent">Генеральный директор
+                        <ul>
+                            <li class="parent">Административное управление
+                                <ul>
+                                    <li class="current">Группа системного администрирования</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
         <?php
@@ -279,13 +295,14 @@ if (
                 ['ENTITY_ID' => 'USER', 'FIELD_NAME' => 'UF_COMPETENCE']
         )->Fetch();
         ?>
+        <!-- COMPETENCES-->
         <?php if ($arResult['COMPETENCES']): ?>
             <div class="intranet-user-profile-column-block">
-                <div class="intranet-user-profile-column-block-title">
+                <h2 class="intranet-user-profile-column-block-title">
                     <span class="intranet-user-profile-column-block-title-text">
                         <?= Loc::getMessage('INTRANET_USER_PROFILE_COMPETENCE_TITLE') ?>
                     </span>
-                </div>
+                </h2>
                 <div class="user-profile-competences">
                     <?php foreach ($arResult['COMPETENCES'] as $comp):?>
                         <div class="user-profile-competences__item">
@@ -389,6 +406,7 @@ if (
                 && !$arResult["isExtranetSite"]
         ) {
             ?>
+            <!--благодарности-->
             <div class="intranet-user-profile-column-block">
             <div class="intranet-user-profile-column-block-title">
                 <span class="intranet-user-profile-column-block-title-text"><?= Loc::getMessage('INTRANET_USER_PROFILE_BLOG_GRAT_TITLE') ?></span><?
@@ -450,8 +468,63 @@ if (
             }
             ?></div><?
         }
+
+// Мои интересы
+        if (
+        $arResult["CurrentUser"]["STATUS"] != 'extranet'
+        && !empty($arResult["Tags"])
+        && (
+        !empty($arResult["Tags"]["COUNT"])
+        || $arResult["Permissions"]['edit']
+        || $USER->getId() == $arResult["User"]["ID"]
+        )
+        && !in_array($arResult["User"]["STATUS"], ['extranet', 'email', 'invited'])
+        ) {
+        ?>
+        <div id="intranet-user-profile-tags-container"
+             class="intranet-user-profile-container<?= (empty($arResult["Tags"]["COUNT"]) ? ' intranet-user-profile-container-empty' : '') ?>">
+            <div class="intranet-user-profile-container-header">
+                <div class="intranet-user-profile-container-title"><?= Loc::getMessage('INTRANET_USER_PROFILE_TAGS_TITLE') ?></div><?
+
+                if (
+                        $arResult["Permissions"]['edit']
+                        || $USER->getId() == $arResult["User"]["ID"]
+                ) {
+                    ?>
+                    <div id="intranet-user-profile-add-tags"
+                         class="intranet-user-profile-container-edit"><?= Loc::getMessage('INTRANET_USER_PROFILE_TAGS_MODIFY') ?></div><?
+                }
+
+                ?></div>
+            <div class="intranet-user-profile-container-body intranet-user-profile-tags-wrapper"><?
+
+                if (
+                        $arResult["Permissions"]['edit']
+                        || $USER->getId() == $arResult["User"]["ID"]
+                ) {
+                    ?>
+                    <div id="intranet-user-profile-tags-input" class="intranet-user-profile-tags-area"></div><?
+                }
+
+                ?>
+                <div class="intranet-user-profile-tags" id="intranet-user-profile-tags"></div>
+
+                <div id="intranet-user-profile-interests-stub"
+                     class="intranet-user-profile-about intranet-user-profile-empty-stub intranet-user-profile-about-interests">
+                    <div class="intranet-user-profile-post-edit-stub-default"><?= Loc::getMessage('INTRANET_USER_PROFILE_INTERESTS_STUB_TEXT') ?></div>
+                    <a id="intranet-user-profile-interests-stub-button"
+                       class="ui-btn ui-btn-sm ui-btn-light-border ui-btn-round ui-btn-caps"><?= Loc::getMessage('INTRANET_USER_PROFILE_INTERESTS_STUB_BUTTON_2') ?></a>
+                </div>
+
+                <div class="intranet-user-profile-thanks-users-loader" id="intranet-user-profile-tags-loader"></div>
+            </div>
+        </div><?
+        }
         ?>
     </div>
+    <!--Конец левая колонка-->
+
+
     <div class="intranet-user-profile-column-right">
         <?
         if ($arResult['IsOwnProfile'] || $arResult['Permissions']['edit']) {
@@ -492,9 +565,36 @@ if (
 
         if ($arResult['IsOwnProfile'] || $arResult['Permissions']['edit']) {
             echo '</div>';
-        }
+        }?>
 
-        if (
+        <!-- Организационная структура-->
+        <div class="intranet-user-profile-column-block">
+            <h2 class="intranet-user-profile-column-block-title">
+                        <span class="intranet-user-profile-column-block-title-text">
+                            <?= Loc::getMessage('INTRANET_USER_PROFILE_DEPARTMENT_TITLE') ?>
+                        </span>
+            </h2>
+            <div class="department-chain">
+                <?= $arResult['DEPARTMENT_CHAIN'] ?>
+            </div>
+
+            <div class="breadcrumbs">
+                <ul>
+                    <li class="parent">Генеральный директор
+                        <ul>
+                            <li class="parent">Административное управление
+                                <ul>
+                                    <li class="current">Группа системного администрирования</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+     <?   if (
                 !empty($arResult["ProfileBlogPost"])
                 && (
                         !empty($arResult["ProfileBlogPost"]["POST_ID"])
@@ -562,60 +662,13 @@ if (
             </div>
             <?
         }
-
-        if (
-                $arResult["CurrentUser"]["STATUS"] != 'extranet'
-                && !empty($arResult["Tags"])
-                && (
-                        !empty($arResult["Tags"]["COUNT"])
-                        || $arResult["Permissions"]['edit']
-                        || $USER->getId() == $arResult["User"]["ID"]
-                )
-                && !in_array($arResult["User"]["STATUS"], ['extranet', 'email', 'invited'])
-        ) {
-            ?>
-        <div id="intranet-user-profile-tags-container"
-             class="intranet-user-profile-container<?= (empty($arResult["Tags"]["COUNT"]) ? ' intranet-user-profile-container-empty' : '') ?>">
-            <div class="intranet-user-profile-container-header">
-                <div class="intranet-user-profile-container-title"><?= Loc::getMessage('INTRANET_USER_PROFILE_TAGS_TITLE') ?></div><?
-
-                if (
-                        $arResult["Permissions"]['edit']
-                        || $USER->getId() == $arResult["User"]["ID"]
-                ) {
-                    ?>
-                    <div id="intranet-user-profile-add-tags"
-                         class="intranet-user-profile-container-edit"><?= Loc::getMessage('INTRANET_USER_PROFILE_TAGS_MODIFY') ?></div><?
-                }
-
-                ?></div>
-            <div class="intranet-user-profile-container-body intranet-user-profile-tags-wrapper"><?
-
-                if (
-                        $arResult["Permissions"]['edit']
-                        || $USER->getId() == $arResult["User"]["ID"]
-                ) {
-                    ?>
-                    <div id="intranet-user-profile-tags-input" class="intranet-user-profile-tags-area"></div><?
-                }
-
-                ?>
-                <div class="intranet-user-profile-tags" id="intranet-user-profile-tags"></div>
-
-                <div id="intranet-user-profile-interests-stub"
-                     class="intranet-user-profile-about intranet-user-profile-empty-stub intranet-user-profile-about-interests">
-                    <div class="intranet-user-profile-post-edit-stub-default"><?= Loc::getMessage('INTRANET_USER_PROFILE_INTERESTS_STUB_TEXT') ?></div>
-                    <a id="intranet-user-profile-interests-stub-button"
-                       class="ui-btn ui-btn-sm ui-btn-light-border ui-btn-round ui-btn-caps"><?= Loc::getMessage('INTRANET_USER_PROFILE_INTERESTS_STUB_BUTTON_2') ?></a>
-                </div>
-
-                <div class="intranet-user-profile-thanks-users-loader" id="intranet-user-profile-tags-loader"></div>
-            </div>
-            </div><?
-        }
         ?>
+
     </div>
 </div>
+
+
+
 <div class="intranet-user-profile-bottom-controls">
     <? /*if ($arResult["IsOwnProfile"]):?>
 	<a class="ui-btn ui-btn-xs ui-btn-light-border ui-btn-themes" onclick="BX.Intranet.Bitrix24.ThemePicker.Singleton.showDialog()">
