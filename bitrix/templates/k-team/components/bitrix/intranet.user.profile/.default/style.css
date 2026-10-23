@@ -33,13 +33,15 @@
     }
 
     .intranet-user-profile-column-block-title,
-    .intranet-user-profile-container-title {
+    .intranet-user-profile-container-title,
+    .ui-entity-editor-header-title-text {
         display: flex;
         padding: 0 0 14px 0;
         line-height: 22px;
         font-size: 22px;
         font-weight: 700;
         border-bottom: 1px solid #eef2f4;
+        color: black;
     }
 
     .intranet-user-profile-column-block-title-text {
@@ -318,7 +320,9 @@
         height: 13px;
         background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2014%2013%22%3E%3Cpath%20fill%3D%22%23525C69%22%20d%3D%22M10%2C13%20L10%2C10%20L12%2C10%20L12%2C2%20L2%2C2%20L2%2C10%20L4%2C10%20L4%2C13%20L1.70000005%2C13%20C0.761115947%2C13%20-1.07064464e-16%2C12.2388841%20-2.22044605e-16%2C11.3%20L-2.22044605e-16%2C1.70000005%20C-3.37024746e-16%2C0.761115947%200.761115947%2C-2.95815068e-14%201.70000005%2C-2.97539771e-14%20L12.3%2C-2.95319325e-14%20C13.2388841%2C-2.88705061e-14%2014%2C0.761115947%2014%2C1.70000005%20L14%2C11.3%20C14%2C12.2388841%2013.2388841%2C13%2012.3%2C13%20L10%2C13%20Z%20M6.00870612%2C7.92000351%20L3.10110152%2C7.92000351%20L7.00847103%2C4.3678494%20L10.9158405%2C7.92000351%20L8.02731135%2C7.92000351%20L8.02731135%2C12.8931369%20L6.00870612%2C12.8931369%20L6.00870612%2C7.92000351%20Z%22/%3E%3C/svg%3E") center center no-repeat;
     }
+
     /*АДМИНИСТРАТОР*/
+
     .intranet-user-profile-rank {
         position: absolute;
         max-width: 50%;
@@ -341,7 +345,7 @@
         color: #000;
         /* Форма и рамка */
         border: 1px solid #999999; /* Серая рамка */
-        border-radius: 50px;       /* Сильное скругление для овальной формы */
+        border-radius: 50px; /* Сильное скругление для овальной формы */
         /* Внутренние отступы: сверху/снизу 8px, слева/справа 20px */
         padding: 8px 20px;
 
@@ -353,6 +357,7 @@
         /* Плавность при наведении */
         transition: background-color 0.2s ease;
     }
+
     .intranet-user-profile-rank-item:hover {
         background-color: #e8e8e8;
     }
@@ -1530,7 +1535,7 @@
     }
 
     .intranet-user-profile-tags-item {
-       /* display: flex;*/
+        /* display: flex;*/
         white-space: nowrap;
         max-width: 100%;
         position: relative;
@@ -1549,11 +1554,13 @@
         opacity: 1;
         /*transition: 0.1s;*/
     }
-    .intranet-user-profile-tags-item:hover{
+
+    .intranet-user-profile-tags-item:hover {
         border: 1px solid #0a5aa3;
     }
+
     .intranet-user-profile-tags-item:hover .intranet-user-profile-tags-item-title,
-    .intranet-user-profile-tags-item:hover .intranet-user-profile-tags-item-title:before{
+    .intranet-user-profile-tags-item:hover .intranet-user-profile-tags-item-title:before {
         color: #0a5aa3;
     }
 
@@ -2493,14 +2500,15 @@
     }
 }
 
-.user-profile-competences{
+.user-profile-competences {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: flex-start;
     max-width: 600px;
 }
-.user-profile-competences .user-profile-competences__item{
+
+.user-profile-competences .user-profile-competences__item {
     /*border:1px solid #BE0510 ;*/
     height: 24px;
     padding: 0 8px;
@@ -2508,28 +2516,30 @@
     letter-spacing: .32px;
 
     /* --- Выравнивание текста внутри --- */
-    display: flex;          /* Делаем блок флексом для идеального центрирования */
-    align-items: center;    /* Центрирование по вертикали */
-    justify-content: center;/* Центрирование по горизонтали */
+    display: flex; /* Делаем блок флексом для идеального центрирования */
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: center; /* Центрирование по горизонтали */
 
     /* --- Внешний вид (по картинке) --- */
     border: 1px solid #BE0510; /* Красная рамка */
-    border-radius: 50px;       /* Сильное скругление углов */
-    color: #BE0510;            /* Красный текст */
-    font-family: sans-serif;   /* Шрифт без засечек */
+    border-radius: 50px; /* Сильное скругление углов */
+    color: #BE0510; /* Красный текст */
+    font-family: sans-serif; /* Шрифт без засечек */
 
 
     /* --- Размеры и отступы --- */
 
-    white-space: nowrap;       /* Запрещаем перенос текста внутри блока */
+    white-space: nowrap; /* Запрещаем перенос текста внутри блока */
 
 }
-.user-profile-competences .user-profile-competences__item:hover{
-    border:1px solid #0a5aa3 ;
+
+.user-profile-competences .user-profile-competences__item:hover {
+    border: 1px solid #0a5aa3;
 
 }
-.user-profile-competences .user-profile-competences__item:hover a{
-   color: #0a5aa3;
+
+.user-profile-competences .user-profile-competences__item:hover a {
+    color: #0a5aa3;
 }
 
 /* Базовые стили для сброса отступов */
@@ -2579,4 +2589,31 @@ li.current::before {
     /* Если нужно выровнять текст красной строки с родительским текстом,
        а не со стрелочкой, можно поиграть с margin-left */
     margin-left: 15px;
+}
+
+.intranet-user-profile-container-header_title {
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.ui-entity-editor-section, .ui-entity-editor-section-edit {
+    background-color: #fff
+}
+
+.ui-entity-editor-content-block {
+    display: flex;
+}
+
+.ui-entity-editor-section-content {
+    display: grid;
+    /* Первая колонка 250px, вторая — все оставшееся место (1fr) */
+
+    gap: 10px 0; /* Отступы между строками и колонками */
+}
+
+.ui-entity-editor-block-title {
+    width: 200px;
+    color: #6f6f6f;
+    font-size: 14px;
 }

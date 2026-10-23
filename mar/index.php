@@ -671,7 +671,7 @@ use Bitrix\Main\UserTable;
                 if ($user && !empty($user['UF_EXCLUDE'])) {
                     // Значение также будет массивом
                     $arUsersExclude = $user['UF_EXCLUDE'];
-                   // print_r($user['UF_EXCLUDE']);
+                    print_r($user['UF_EXCLUDE']);
                 }
 
             }
@@ -2034,13 +2034,9 @@ use Bitrix\Main\UserTable;
                     const userId = tag.getId();       // ID пользователя
                     const userName = tag.getTitle();  // Имя / ФИО
 
-
                     const arrAr = <?= json_encode($arUsersExclude) ?>;
+                    console.log('Выбран сотрудник:', userName, 'с ID:', userId);
 
-                   /* if (arrAr.includes(userId)) {
-                        alert(userId+' есть в массиве');
-
-                    }*/
                     if (arrAr.some(x => Number(x) === userId)) {
                         alert(userName+' вы уже отправили звезду, выберите другого');
 
@@ -2051,9 +2047,6 @@ use Bitrix\Main\UserTable;
                             });
                         }, 200);
                     }
-
-
-
 
                     // Здесь можно выполнить свои действия, например, отправить AJAX запрос
                     // или обновить другое поле на странице.
@@ -2083,7 +2076,7 @@ use Bitrix\Main\UserTable;
                         options: {
                             id: 'user',
                             // Массив ID пользователей, которых нужно скрыть
-                            excludedIds: [590, 190]
+                           // excludedIds:customProvider
                         }
 
                     }
@@ -2100,15 +2093,15 @@ use Bitrix\Main\UserTable;
             }
         });
 
-        /* const dialog = selector.getDialog();
+       /* const dialog = selector.getDialog();
 
-         // Устанавливаем новые опции для сущности user
-         dialog.getEntity('user').setOptions({
-             excludeUsers: [590]
-         });
+        // Устанавливаем новые опции для сущности user
+        dialog.getEntity('user').setOptions({
+            excludeUsers: [590]
+        });
 
- // Сбрасываем кэш загруженных элементов и перезагружаем вкладки
-         dialog.clearCache();*/
+// Сбрасываем кэш загруженных элементов и перезагружаем вкладки
+        dialog.clearCache();*/
 
         // ID сотрудника → введённый комментарий.
 // Сохраняет текст при перерисовке списка.
